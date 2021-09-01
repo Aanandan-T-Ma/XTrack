@@ -1,0 +1,17 @@
+.sidenav-container {
+    height: 100vh;
+
+    .sidenav {
+        min-width: 200px;
+    }
+}
+
+.nav-link {
+    .item-icon {
+        margin-right: 10px;
+    }
+}
+
+.active-link {
+    background-color: rgba(0, 0, 0, 0.04);
+}

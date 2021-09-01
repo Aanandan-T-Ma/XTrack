@@ -1,0 +1,37 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav class="sidenav" [attr.role]="(isHandset | async) ? 'dialog' : 'navigation'"
+            [mode]="(isHandset | async) ? 'over' : 'side'" [opened]="!(isHandset | async)">
+        <mat-toolbar class="toolbar">
+            <div class="toolbar-title">Username</div>
+        </mat-toolbar>
+        <mat-nav-list class="nav-list">
+            <a mat-list-item routerLink="/user/dashboard" [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link' : '')">
+                <span class="item-icon">
+                    <mat-icon>dashboard</mat-icon>
+                </span>
+                <span class="item-name">Dashboard</span>
+            </a>
+            <a mat-list-item routerLink="/user/income" [ngClass]="'nav-link ' + (pageTitle == 'income' ? 'active-link' : '')">
+                <span class="item-icon">
+                    <mat-icon>attach_money</mat-icon>
+                </span>
+                <span class="item-name">Income</span>
+            </a>
+            <a mat-list-item routerLink="/user/expenditure" [ngClass]="'nav-link ' + (pageTitle == 'expenditure' ? 'active-link' : '')">
+                <span class="item-icon">
+                    <mat-icon>credit_card</mat-icon>
+                </span>
+                <span class="item-name">Expenditure</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar class="toolbar" color="primary">
+            <button class="menu-btn" mat-icon-button (click)="sidenav.toggle()" *ngIf="isHandset | async">
+                <mat-icon aria-label="Side Nav toggle icon">menu</mat-icon>
+            </button>
+            <div class="nav-header" *ngIf="pageTitle">{{ pageTitle[0].toUpperCase() + pageTitle.substring(1) }}</div>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
