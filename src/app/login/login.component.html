@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="main">
+        <div class="img-container">
+            <img src="/assets/login.jpg" alt="Login Image">
+        </div>
+        <div class="outer-form-container">
+            <div class="logo-container">
+                <img src="/assets/logo_text.png" alt="Logo">
+            </div>
+            <div class="form-container">
+                <mat-tab-group>
+                    <mat-tab label="Login">
+                        <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
+                            <mat-form-field class="form-field">
+                                <input matInput placeholder="Username" formControlName="username" autocomplete="off">
+                                <mat-error *ngIf="loginForm.get('username')?.invalid">Username is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="form-field">
+                                <input matInput placeholder="Password" formControlName="password" autocomplete="off"
+                                    [type]="showPassword[0] ? 'text' : 'password'">
+                                <mat-error *ngIf="loginForm.get('password')?.invalid">Password is required</mat-error>
+                            </mat-form-field>
+                            <mat-checkbox class="form-field" [checked]="showPassword[0]" (change)="togglePassword(0)" color="primary">
+                                Show Password
+                            </mat-checkbox>
+                            <button mat-raised-button class="actn-btn" color="primary" type="submit" [disabled]="!loginForm.valid">
+                                Login
+                            </button>
+                        </form>
+                    </mat-tab>
+                    <mat-tab label="Register">
+                        <form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
+                            <mat-form-field class="form-field">
+                                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                                <mat-error *ngIf="registerForm.get('email')?.invalid">
+                                    {{ registerForm.get('email')?.hasError('required') ? 'Email is required': 'Enter a valid email'}}
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="form-field">
+                                <input matInput placeholder="Username" formControlName="username" autocomplete="off">
+                                <mat-error *ngIf="registerForm.get('username')?.invalid">Username is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="form-field">
+                                <input matInput placeholder="Password" formControlName="password" autocomplete="off"
+                                    [type]="showPassword[1] ? 'text' : 'password'">
+                                <mat-icon matSuffix class="form-icon" (click)="togglePassword(1)">
+                                    {{ showPassword[1] ? 'visibility' : 'visibility_off' }}
+                                </mat-icon>
+                                <mat-error *ngIf="registerForm.get('password')?.invalid">Password is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="form-field">
+                                <input matInput placeholder="Confirm Password" formControlName="confirmPassword" autocomplete="off"
+                                    [type]="showPassword[2] ? 'text' : 'password'">
+                                <mat-icon matSuffix class="form-icon" (click)="togglePassword(2)">
+                                    {{ showPassword[2] ? 'visibility' : 'visibility_off' }}
+                                </mat-icon>
+                                <mat-error *ngIf="registerForm.get('confirmPassword')?.invalid">Password is required</mat-error>
+                            </mat-form-field>
+                            <button mat-raised-button class="actn-btn" color="primary" type="submit" [disabled]="!registerForm.valid">
+                                Register
+                            </button>
+                        </form>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>
