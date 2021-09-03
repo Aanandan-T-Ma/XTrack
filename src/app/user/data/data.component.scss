@@ -1,0 +1,90 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.header {
+    width: 100%;
+}
+
+.controls {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .btn-container {
+        button {
+            padding: 0.2em 0.5em;
+        }
+    }
+}
+
+.filter-container {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .form-field {
+        margin: 0 10px;
+    }
+
+    .date-form {
+        .date {
+            width: 50px;
+        }
+        .month {
+            width: 100px;
+        }
+        .year {
+            width: 50px;
+        }
+    }
+}
+
+.table-container {
+    overflow-x: auto;
+    ::ng-deep table {
+        width: 100%;
+
+        thead {
+            tr {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        tbody {
+            tr {
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .main {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .table-container {
+        table {
+            width: 600px;
+        }
+    }
+}

@@ -5,23 +5,32 @@
             <div class="toolbar-title">Username</div>
         </mat-toolbar>
         <mat-nav-list class="nav-list">
-            <a mat-list-item routerLink="/user/dashboard" [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link' : '')">
+            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link' : '')"
+                (click)="goToUrl('/user/dashboard',sidenav)">
                 <span class="item-icon">
                     <mat-icon>dashboard</mat-icon>
                 </span>
                 <span class="item-name">Dashboard</span>
             </a>
-            <a mat-list-item routerLink="/user/income" [ngClass]="'nav-link ' + (pageTitle == 'income' ? 'active-link' : '')">
+            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'income' ? 'active-link' : '')"
+                (click)="goToUrl('/user/income',sidenav)">
                 <span class="item-icon">
                     <mat-icon>attach_money</mat-icon>
                 </span>
                 <span class="item-name">Income</span>
             </a>
-            <a mat-list-item routerLink="/user/expenditure" [ngClass]="'nav-link ' + (pageTitle == 'expenditure' ? 'active-link' : '')">
+            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'expenditure' ? 'active-link' : '')"
+                (click)="goToUrl('/user/expenditure',sidenav)">
                 <span class="item-icon">
                     <mat-icon>credit_card</mat-icon>
                 </span>
                 <span class="item-name">Expenditure</span>
+            </a>
+            <a mat-list-item class="logout">
+                <span class="item-icon">
+                    <mat-icon>exit_to_app</mat-icon>
+                </span>
+                <span class="item-name">Logout</span>
             </a>
         </mat-nav-list>
     </mat-sidenav>

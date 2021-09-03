@@ -11,6 +11,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const modules = [
 	CommonModule,
@@ -24,7 +29,12 @@ const modules = [
 	MatCheckboxModule,
 	MatSidenavModule,
 	MatToolbarModule,
-	MatListModule
+	MatListModule,
+	MatSelectModule,
+	MatTableModule,
+	MatPaginatorModule,
+	MatDatepickerModule,
+	MatNativeDateModule
 ]
 
 @NgModule({

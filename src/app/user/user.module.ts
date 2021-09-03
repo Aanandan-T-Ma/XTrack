@@ -8,6 +8,7 @@ import { IncomeComponent } from './income/income.component';
 import { ExpenditureComponent } from './expenditure/expenditure.component';
 import { SharedModule } from '../shared/shared.module';
 import { UserComponent } from './user.component';
+import { DataComponent } from './data/data.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { UserComponent } from './user.component';
 		NavbarComponent,
 		DashboardComponent,
 		IncomeComponent,
-		ExpenditureComponent
+		ExpenditureComponent,
+  		DataComponent
 	],
 	imports: [
 		CommonModule,

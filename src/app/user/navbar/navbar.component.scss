@@ -15,3 +15,16 @@
 .active-link {
     background-color: rgba(0, 0, 0, 0.04);
 }
+
+.logout {
+    margin: 20px auto;
+
+    &:hover {
+        color: #2534ff;
+        background-color: transparent;
+    }
+
+    .item-icon {
+        margin-right: 10px;
+    }
+}
