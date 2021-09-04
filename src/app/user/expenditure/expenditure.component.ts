@@ -9,8 +9,8 @@ export class ExpenditureComponent implements OnInit {
 
 	allExpenses = [
 		{
-			date: 1,
-			month: 0,
+			date: 14,
+			month: 4,
 			year: 2020,
 			category: 'Grocery',
 			name: 'Vegetables',
@@ -25,9 +25,9 @@ export class ExpenditureComponent implements OnInit {
 			amount: 500
 		},
 		{
-			date: 21,
+			date: 28,
 			month: 2,
-			year: 2021,
+			year: 2020,
 			category: 'Stationary',
 			name: 'Books',
 			amount: 650
@@ -35,10 +35,10 @@ export class ExpenditureComponent implements OnInit {
 		{
 			date: 23,
 			month: 3,
-			year: 2021,
+			year: 2019,
 			category: 'Rent',
 			name: 'Rent',
-			amount: 150
+			amount: 1000
 		}
 	];
 	displayedColumns = ['S.No', 'Spent On', 'Amount', 'Category', 'Date', 'controls'];

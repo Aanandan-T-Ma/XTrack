@@ -27,7 +27,7 @@ export class IncomeComponent implements OnInit {
 		{
 			date: 21,
 			month: 2,
-			year: 2021,
+			year: 2019,
 			category: 'Stationary',
 			name: 'Books',
 			amount: 650
