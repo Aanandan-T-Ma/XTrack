@@ -2,6 +2,11 @@
     <main class="main mat-elevation-z8">
         <header class="header">
             <h1 class="title">{{ title }}</h1>
+            <div class="add-btn-container">
+                <button mat-raised-button class="add-btn" (click)="openAddModal()">
+                    <mat-icon>add</mat-icon> New
+                </button>
+            </div>
         </header>
         <div class="controls">
             <div class="select-container">
@@ -18,8 +23,8 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Enter a date range</mat-label>
                     <mat-date-range-input [rangePicker]="picker">
-                      <input matStartDate placeholder="Start date">
-                      <input matEndDate placeholder="End date">
+                      <input matStartDate placeholder="Start date" (dateInput)="rangeSelected(true, $event)">
+                      <input matEndDate placeholder="End date" (dateInput)="rangeSelected(false, $event)">
                     </mat-date-range-input>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-date-range-picker #picker color="primary"></mat-date-range-picker>
@@ -62,6 +67,16 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Day</mat-label>
+                    <mat-select formControlName="day">
+                        <mat-option [value]="''">Any</mat-option>
+                        <mat-option *ngFor="let d of days" [value]="d">
+                            {{ dayNames[d] }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
     
                 <mat-form-field class="form-field">
                     <mat-label>Category</mat-label>
@@ -86,7 +101,7 @@
                     <mat-form-field class="form-field">
                         <input matInput type="number" placeholder="Max Amount" autocomplete="off" formControlName="maxAmount">
                         <mat-error *ngIf="filterForm.get('maxAmount')?.invalid">
-                            {{ filterForm.get('maxAmount')?.hasError('very_less') ? 'Value less than min amount' : 'Invalid amount' }}
+                            Invalid amount
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -153,13 +168,25 @@
                         {{ (element.date <= 9 ? '0' : '') + element.date + ' - ' + monthNames[element.month] + ' - ' + element.year }} 
                     </td>
                 </ng-container>
+                <ng-container matColumnDef="Day">
+                    <th mat-header-cell *matHeaderCellDef class="data-col">
+                        <div class="th-cell" (click)="sortData('day')">
+                            <div> Day </div>
+                            <div *ngIf="sorted[0] === 'day'">
+                                <mat-icon *ngIf="sorted[1] === 1">arrow_drop_up</mat-icon>
+                                <mat-icon *ngIf="sorted[1] === 2">arrow_drop_down</mat-icon>
+                            </div>
+                        </div>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{ dayNames[element.day] }} </td>
+                </ng-container>
                 <ng-container matColumnDef="controls">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let i = index"> 
-                        <button mat-icon-button (click)="edit(i)">
+                        <button mat-icon-button (click)="openEditModal(i)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button (click)="delete(i)" color="warn">
+                        <button mat-icon-button (click)="openDeleteModal(i)" color="warn">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </td>

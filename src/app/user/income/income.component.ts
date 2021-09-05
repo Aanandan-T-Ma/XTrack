@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
 	selector: 'app-income',
@@ -7,44 +8,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class IncomeComponent implements OnInit {
 
-	allIncomes = [
-		{
-			date: 1,
-			month: 0,
-			year: 2020,
-			category: 'Grocery',
-			name: 'Vegetables',
-			amount: 150
-		},
-		{
-			date: 10,
-			month: 3,
-			year: 2021,
-			category: 'Stationary',
-			name: 'Bag',
-			amount: 500
-		},
-		{
-			date: 21,
-			month: 2,
-			year: 2019,
-			category: 'Stationary',
-			name: 'Books',
-			amount: 650
-		},
-		{
-			date: 23,
-			month: 3,
-			year: 2021,
-			category: 'Rent',
-			name: 'Rent',
-			amount: 150
-		}
-	];
-	displayedColumns = ['S.No', 'Source', 'Amount', 'Category', 'Date', 'controls'];
+	allIncomes: any[];
+	displayedColumns = ['S.No', 'Source', 'Amount', 'Category', 'Date', 'Day', 'controls'];
 
-	constructor() { }
+	constructor(private dataService: DataService) { }
 
-	ngOnInit(): void { }
+	ngOnInit(): void { 
+		this.allIncomes = this.dataService.getData('income');
+	}
 
 }

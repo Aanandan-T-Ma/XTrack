@@ -1,0 +1,34 @@
+<h2>Data Modal</h2>
+<mat-dialog-content class="modal-content">
+    <form [formGroup]="dataForm" class="modal-form">
+        <mat-form-field class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" autocomplete="off">
+            <mat-error *ngIf="dataForm.get('name')?.invalid">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount" autocomplete="off">
+            <mat-error *ngIf="dataForm.get('amount')?.invalid">Amount is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="category" autocomplete="off">
+            <mat-error *ngIf="dataForm.get('category')?.invalid">Category is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" autocomplete="off">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="dataForm.get('date')?.invalid">Date is required</mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="btn-group">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="dataForm.invalid" (click)="saveData()">Save</button>
+</mat-dialog-actions>

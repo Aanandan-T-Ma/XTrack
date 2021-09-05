@@ -15,6 +15,22 @@
 
 .header {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .add-btn-container {
+        button {
+            background-color: hsl(262, 93%, 48%);
+            color: white;
+
+            &:hover {
+                background-color: hsl(262, 93%, 38%);
+                box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
+            }
+        }
+    }
 }
 
 .controls {
@@ -27,6 +43,10 @@
     .btn-container {
         button {
             padding: 0.2em 0.5em;
+
+            &:hover {
+                box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
+            }
         }
     }
 }
@@ -51,6 +71,15 @@
             }
             .year {
                 width: 50px;
+            }
+        }
+
+        .apply-btn-container {
+            button {
+                transition-duration: 0.5s;
+                &:hover {
+                    box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
+                }
             }
         }
     }
@@ -123,5 +152,11 @@ input[type=number] {
         table {
             width: 600px;
         }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .main {
+        padding: 10px;
     }
 }
