@@ -24,6 +24,7 @@
         button {
             background-color: hsl(262, 93%, 48%);
             color: white;
+            padding: 1px 7px 1px 5px;
 
             &:hover {
                 background-color: hsl(262, 93%, 38%);
@@ -51,35 +52,35 @@
     }
 }
 
-.filter-container {
-    .filter-form {
-        margin: 20px 0;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
+.filter-form {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 
-        .form-field {
-            margin: 0 10px;
+    .form-field {
+        margin: 0 10px;
+    }
+
+    .date-form {
+        .date {
+            width: 50px;
         }
-
-        .date-form {
-            .date {
-                width: 50px;
-            }
-            .month {
-                width: 100px;
-            }
-            .year {
-                width: 50px;
-            }
+        .month {
+            width: 100px;
         }
+        .year {
+            width: 50px;
+        }
+    }
 
-        .apply-btn-container {
-            button {
-                transition-duration: 0.5s;
-                &:hover {
-                    box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
-                }
+    .apply-btn-container {
+        button {
+            margin-left: 1rem;
+            transition-duration: 0.5s;
+            
+            &:hover {
+                box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
             }
         }
     }
@@ -158,5 +159,11 @@ input[type=number] {
 @media only screen and (max-width: 500px) {
     .main {
         padding: 10px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .form-field {
+        width: 40%;
     }
 }

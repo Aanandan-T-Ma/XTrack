@@ -1,4 +1,4 @@
-<h2>Data Modal</h2>
+<h2>{{ (data.newData ? 'Add ' : 'Edit ') + data.type }}</h2>
 <mat-dialog-content class="modal-content">
     <form [formGroup]="dataForm" class="modal-form">
         <mat-form-field class="form-field">
@@ -21,7 +21,7 @@
 
         <mat-form-field class="form-field">
             <mat-label>Date</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="date" autocomplete="off">
+            <input matInput [matDatepicker]="picker" formControlName="date" [max]="today" autocomplete="off">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="dataForm.get('date')?.invalid">Date is required</mat-error>

@@ -10,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DataModalComponent implements OnInit {
 
 	dataForm: FormGroup;
+	today: Date = new Date();
 
 	constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<DataModalComponent>) { }
 

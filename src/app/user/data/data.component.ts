@@ -249,7 +249,8 @@ export class DataComponent implements OnInit {
 	openAddModal(): void {
 		const dialogRef = this.dialog.open(DataModalComponent, {
 			data: {
-				newData: true
+				newData: true,
+				type: this.title
 			}
 		});
 		dialogRef.afterClosed().subscribe(result => {
@@ -261,6 +262,7 @@ export class DataComponent implements OnInit {
 		const dialogRef = this.dialog.open(DataModalComponent, {
 			data: {
 				newData: false,
+				type: this.title,
 				data: this.displayedData[index]
 			}
 		});

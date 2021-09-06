@@ -15,7 +15,8 @@ export class DataService {
 			day: new Date(2020, 0, 1).getDay(),
 			category: 'Grocery',
 			name: 'Vegetables',
-			amount: 150
+			amount: 150,
+			type: 'income'
 		},
 		{
 			date: 10,
@@ -24,7 +25,8 @@ export class DataService {
 			day: new Date(2021, 3, 10).getDay(),
 			category: 'Stationary',
 			name: 'Bag',
-			amount: 500
+			amount: 500,
+			type: 'income'
 		},
 		{
 			date: 21,
@@ -33,7 +35,8 @@ export class DataService {
 			day: new Date(2019, 2, 21).getDay(),
 			category: 'Stationary',
 			name: 'Books',
-			amount: 650
+			amount: 650,
+			type: 'income'
 		},
 		{
 			date: 23,
@@ -42,7 +45,8 @@ export class DataService {
 			day: new Date(2021, 3, 23).getDay(),
 			category: 'Rent',
 			name: 'Rent',
-			amount: 150
+			amount: 150,
+			type: 'income'
 		}
 	];
 	expenses = [
@@ -53,7 +57,8 @@ export class DataService {
 			day: new Date(2020, 4, 14).getDay(),
 			category: 'Grocery',
 			name: 'Vegetables',
-			amount: 150
+			amount: 150,
+			type: 'expense'
 		},
 		{
 			date: 10,
@@ -62,7 +67,8 @@ export class DataService {
 			day: new Date(2021, 3, 10).getDay(),
 			category: 'Stationary',
 			name: 'Bag',
-			amount: 500
+			amount: 500,
+			type: 'expense'
 		},
 		{
 			date: 28,
@@ -71,7 +77,8 @@ export class DataService {
 			day: new Date(2020, 2, 28).getDay(),
 			category: 'Stationary',
 			name: 'Books',
-			amount: 650
+			amount: 650,
+			type: 'expense'
 		},
 		{
 			date: 23,
@@ -80,7 +87,8 @@ export class DataService {
 			day: new Date(2019, 3, 23).getDay(),
 			category: 'Rent',
 			name: 'Rent',
-			amount: 1000
+			amount: 1000,
+			type: 'expense'
 		}
 	];
 

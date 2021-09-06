@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoadingComponent } from './loading/loading.component';
 
 const modules = [
 	CommonModule,
@@ -40,8 +41,10 @@ const modules = [
 ]
 
 @NgModule({
-	declarations: [],
+	declarations: [
+    	LoadingComponent
+  	],
 	imports: [modules],
-	exports: [modules]
+	exports: [modules, LoadingComponent]
 })
 export class SharedModule { }

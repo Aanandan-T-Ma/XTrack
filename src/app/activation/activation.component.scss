@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #673ab7;
+    flex-direction: column;
+}
+
+.main {
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.activated, .invalid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+
+    div {
+        width: 100%;
+        text-align: center;
+    }
+
+    .success {
+        color: green;
+        .icon {
+            font-size: 50px;
+        }
+    }
+
+    .error {
+        color: red;
+        .icon {
+            font-size: 50px;
+        }
+    }
+
+    .text {
+        margin-left: 10px;
+        font-size: 1rem;
+    }
+}

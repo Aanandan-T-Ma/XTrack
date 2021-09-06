@@ -29,7 +29,6 @@ export class NavbarComponent implements OnInit {
 	goToUrl(url: string, sidenav: any): void {
 		this.router.navigateByUrl(url);
 		this.isHandset.subscribe(result => {
-			console.log(result);
 			if(result) sidenav.close();
 		})
 	}
