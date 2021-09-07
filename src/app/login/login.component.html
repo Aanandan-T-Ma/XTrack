@@ -26,6 +26,10 @@
                             <button mat-raised-button class="actn-btn" color="primary" type="submit" [disabled]="!loginForm.valid">
                                 Login
                             </button>
+                            <div class="login-msg" *ngIf="loginErrorMsg">
+                                {{ loginErrorMsg }}
+                                <span (click)="loginErrorMsg = ''">&times;</span>
+                            </div>
                         </form>
                     </mat-tab>
                     <mat-tab label="Register">
@@ -38,7 +42,11 @@
                             </mat-form-field>
                             <mat-form-field class="form-field">
                                 <input matInput placeholder="Username" formControlName="username" autocomplete="off">
-                                <mat-error *ngIf="registerForm.get('username')?.invalid">Username is required</mat-error>
+                                <mat-error *ngIf="registerForm.get('username')?.invalid">
+                                    {{ registerForm.get('username')?.hasError('required') ? 
+                                        'Username is required' : 
+                                        'Username must start with a letter and consist of atleast 8 characters[Only letter & numbers]' }}
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-field">
                                 <input matInput placeholder="Password" formControlName="password" autocomplete="off"
@@ -46,7 +54,11 @@
                                 <mat-icon matSuffix class="form-icon" (click)="togglePassword(1)">
                                     {{ showPassword[1] ? 'visibility' : 'visibility_off' }}
                                 </mat-icon>
-                                <mat-error *ngIf="registerForm.get('password')?.invalid">Password is required</mat-error>
+                                <mat-error *ngIf="registerForm.get('password')?.invalid">
+                                   {{ registerForm.get('username')?.hasError('required') ? 
+                                        'Password is required' : 
+                                        'Password must be atleast 8 characters long' }}
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-field">
                                 <input matInput placeholder="Confirm Password" formControlName="confirmPassword" autocomplete="off"
@@ -59,6 +71,10 @@
                             <button mat-raised-button class="actn-btn" color="primary" type="submit" [disabled]="!registerForm.valid">
                                 Register
                             </button>
+                            <div class="login-msg" *ngIf="registerErrorMsg">
+                                {{ registerErrorMsg }}
+                                <span (click)="registerErrorMsg = ''">&times;</span>
+                            </div>
                         </form>
                     </mat-tab>
                 </mat-tab-group>

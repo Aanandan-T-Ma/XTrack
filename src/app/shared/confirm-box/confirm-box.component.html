@@ -1,0 +1,25 @@
+<!-- 
+    icon -> tick: done
+            !: error
+    type -> success, info
+ -->
+<div class="box-container">
+    <div class="icon-div">
+        <mat-icon [ngClass]="'icon ' + config.type">
+            {{ config.icon }}
+        </mat-icon>
+    </div>
+    <div class="message">{{ config.message }}</div>
+    <div class="sub-message" *ngIf="config.submessage">{{ config.submessage }}</div>
+    <mat-dialog-actions class="btn-container">
+        <button mat-raised-button mat-dialog-close *ngIf="config.cancelText">
+            Cancel
+        </button>
+        <button mat-raised-button color="primary" mat-dialog-close *ngIf="config.okText">
+            Ok
+        </button>
+        <button mat-raised-button color="primary" *ngIf="config.confirmText">
+            Confirm
+        </button>
+    </mat-dialog-actions>
+</div>

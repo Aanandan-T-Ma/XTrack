@@ -1,0 +1,36 @@
+.box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 300px;
+
+    div {
+        text-align: center;
+    }
+}
+
+.icon-div {
+    .icon {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .success {
+        color: green;
+    }
+
+    .confirm {
+        color: red;
+    }
+}
+
+.message {
+    color: black;
+    font-size: 1.1rem;
+}
+
+.sub-message {
+    color: grey;
+    font-size: 0.75rem;
+}

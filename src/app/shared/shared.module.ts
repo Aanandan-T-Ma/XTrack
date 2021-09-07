@@ -18,6 +18,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoadingComponent } from './loading/loading.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 
 const modules = [
 	CommonModule,
@@ -37,12 +39,14 @@ const modules = [
 	MatPaginatorModule,
 	MatDatepickerModule,
 	MatNativeDateModule,
-	MatDialogModule
+	MatDialogModule,
+	HttpClientModule
 ]
 
 @NgModule({
 	declarations: [
-    	LoadingComponent
+    	LoadingComponent,
+     	ConfirmBoxComponent
   	],
 	imports: [modules],
 	exports: [modules, LoadingComponent]

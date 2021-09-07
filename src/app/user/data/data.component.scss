@@ -163,7 +163,9 @@ input[type=number] {
 }
 
 @media only screen and (max-width: 450px) {
-    .form-field {
-        width: 40%;
+    .filter-form {
+        .form-field {
+            width: 40%;
+        }
     }
 }

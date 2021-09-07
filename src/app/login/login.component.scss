@@ -34,7 +34,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    min-height: 320px;
+    min-height: 350px;
 }
 
 .form {
@@ -54,6 +54,23 @@
 
     .actn-btn {
         width: fit-content;
+    }
+
+    .login-msg {
+        background-color: rgba(255, 0, 0, 0.75);
+        color: white;
+        font-size: 15px;
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px auto;
+
+        span {
+            float: right;
+            margin-left: 5px;
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
     }
 }
 
