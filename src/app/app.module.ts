@@ -7,12 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { ActivationComponent } from './activation/activation.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		LoginComponent,
-  ActivationComponent
+  		ActivationComponent
 	],
 	imports: [
 		BrowserModule,
@@ -20,7 +22,13 @@ import { ActivationComponent } from './activation/activation.component';
 		BrowserAnimationsModule,
 		SharedModule
 	],
-	providers: [],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: TokenInterceptor,
+			multi: true
+		}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

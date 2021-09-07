@@ -1,11 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { baseURL } from '../shared/baseURL';
+import { ProcessHttpMsgService } from './process-httpmsg.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class DataService {
 
-	constructor() { }
+	constructor(private http: HttpClient, private processHTTPMsgService: ProcessHttpMsgService) { }
 
 	incomes = [
 		{
@@ -92,14 +97,16 @@ export class DataService {
 		}
 	];
 
-	getData(type: string): any[] {
-		if (type == 'expense') {
-			return this.expenses;
-		}
-		else if (type == 'income') {
-			return this.incomes;
-		}
-		return [];
+	getData(type: string): Observable<any> {
+		return this.http.get(`${baseURL}/cashflow/specific/${type}`)
+			.pipe(catchError(this.processHTTPMsgService.handleError));
+		// if (type == 'expense') {
+		// 	return this.expenses;
+		// }
+		// else if (type == 'income') {
+		// 	return this.incomes;
+		// }
+		// return [];
 	}
 	
 }

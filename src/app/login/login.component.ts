@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ConfirmBoxComponent } from '../shared/confirm-box/confirm-box.component';
 
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 	loginErrorMsg: string = '';
 	registerErrorMsg: string = '';
 
-	constructor(private authService: AuthService, private dialog: MatDialog) { }
+	constructor(private authService: AuthService, private dialog: MatDialog, private router: Router) { }
 
 	ngOnInit(): void {
 		this.loginForm = new FormGroup({
@@ -36,8 +37,8 @@ export class LoginComponent implements OnInit {
 	login(): void {
 		this.authService.login(this.loginForm.value).subscribe(res => {
 			if(res.success) {
-				console.log('Login successful');
-				this.authService.setUserCredentials(res.token);
+				this.authService.setUserCredentials(res.token, this.loginForm.value.username);
+				this.router.navigate(['/user']);
 			}
 			else {
 				this.loginErrorMsg = res.message;

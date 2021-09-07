@@ -14,7 +14,9 @@ export class ExpenditureComponent implements OnInit {
 	constructor(private dataService: DataService) { }
 
 	ngOnInit(): void {
-		this.allExpenses = this.dataService.getData('expense');
+		this.dataService.getData('expense').subscribe(data => {
+			this.allExpenses = data;
+		})
 	}
 
 }

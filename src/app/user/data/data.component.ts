@@ -48,6 +48,16 @@ export class DataComponent implements OnInit {
 	constructor(private dialog: MatDialog) { }
 
 	ngOnInit(): void {
+		this.allData = [{
+			date: 14,
+			month: 4,
+			year: 2020,
+			day: new Date(2020, 4, 14).getDay(),
+			category: 'Grocery',
+			name: 'Vegetables',
+			amount: 150,
+			type: 'expense'
+		}]
 		let da = new Date(2021, 7, 3);
 		let d = da.getDate();
 		let m = da.getMonth();

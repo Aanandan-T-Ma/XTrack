@@ -18,6 +18,8 @@ export class AuthService {
 
 	private authToken: string | undefined;
 	private tokenKey = 'userToken';
+	private username: string | undefined;
+	private usernameKey = 'username';
 
 	constructor(private http: HttpClient, private processHTTPMsgService: ProcessHttpMsgService) { }
 
@@ -38,26 +40,39 @@ export class AuthService {
 		.pipe(catchError(this.processHTTPMsgService.handleError));
 	}
 
-	logout() {
+	logout(): void {
 		this.destroyUserCredentials();
-	}
-
-	getToken() {
-		return this.authToken || localStorage.getItem(this.tokenKey);
-	}
-
-	setUserCredentials(token: string) {
-		this.authToken = token;
-		localStorage.setItem(this.tokenKey, token);
-	}
-
-	destroyUserCredentials() {
-		this.authToken = undefined;
-		localStorage.removeItem(this.tokenKey);
 	}
 
 	activateAccount(url: string): Observable<AuthResponse> {
 		return this.http.post<AuthResponse>(baseURL + '/users/otp', { url: url })
 		.pipe(catchError(this.processHTTPMsgService.handleError));
+	}
+
+	getUsername(): string | undefined | null {
+		return this.username || localStorage.getItem(this.usernameKey);
+	}
+
+	getToken(): string | undefined | null {
+		return this.authToken || localStorage.getItem(this.tokenKey);
+	}
+
+	verifyToken(): Observable<AuthResponse> {
+		return this.http.post<AuthResponse>(baseURL + '/users/verifyToken', { token: this.getToken() })
+		.pipe(catchError(this.processHTTPMsgService.handleError));
+	}
+
+	setUserCredentials(token: string, username: string): void {
+		this.authToken = token;
+		localStorage.setItem(this.tokenKey, token);
+		this.username = username;
+		localStorage.setItem(this.usernameKey, username);
+	}
+
+	destroyUserCredentials(): void {
+		this.authToken = undefined;
+		localStorage.removeItem(this.tokenKey);
+		this.username = undefined;
+		localStorage.removeItem(this.usernameKey);
 	}
 }

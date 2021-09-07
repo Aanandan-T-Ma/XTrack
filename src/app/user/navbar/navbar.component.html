@@ -2,7 +2,7 @@
     <mat-sidenav #sidenav class="sidenav" [attr.role]="(isHandset | async) ? 'dialog' : 'navigation'"
             [mode]="(isHandset | async) ? 'over' : 'side'" [opened]="!(isHandset | async)">
         <mat-toolbar class="toolbar">
-            <div class="toolbar-title">Username</div>
+            <div class="toolbar-title">{{ username }}</div>
         </mat-toolbar>
         <mat-nav-list class="nav-list">
             <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link' : '')"
@@ -26,7 +26,7 @@
                 </span>
                 <span class="item-name">Expenditure</span>
             </a>
-            <a mat-list-item class="logout">
+            <a mat-list-item class="logout" (click)="logout()">
                 <span class="item-icon">
                     <mat-icon>exit_to_app</mat-icon>
                 </span>
