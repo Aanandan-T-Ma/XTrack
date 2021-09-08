@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-data-modal',
@@ -11,6 +13,7 @@ export class DataModalComponent implements OnInit {
 
 	dataForm: FormGroup;
 	today: Date = new Date();
+	filteredOptions: Observable<string[]>;
 
 	constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<DataModalComponent>) { }
 
@@ -23,6 +26,13 @@ export class DataModalComponent implements OnInit {
 			date: new FormControl(this.data.newData ? '' : new Date(this.data.data.year, this.data.data.month, this.data.data.date), 
 									Validators.required)
 		});
+		this.filteredOptions = this.dataForm['controls']['category'].valueChanges.pipe(
+			startWith(''),
+			map(value => {
+				value = value.toLowerCase();
+				return this.data.categories.filter((option: string) => option.toLowerCase().includes(value));
+			})
+		);
 	}
 
 	saveData(): void {

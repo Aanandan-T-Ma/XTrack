@@ -15,7 +15,13 @@
 
         <mat-form-field class="form-field">
             <mat-label>Category</mat-label>
-            <input matInput formControlName="category" autocomplete="off">
+            <input matInput formControlName="category" [matAutocomplete]="autocomplete">
+            <mat-autocomplete #autocomplete="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-hint *ngIf="data.categories.length === 0">Eg: General, Food, Travel, Education</mat-hint>
             <mat-error *ngIf="dataForm.get('category')?.invalid">Category is required</mat-error>
         </mat-form-field>
 

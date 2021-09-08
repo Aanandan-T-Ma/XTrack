@@ -21,6 +21,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const modules = [
 	CommonModule,
@@ -42,7 +43,8 @@ const modules = [
 	MatNativeDateModule,
 	MatDialogModule,
 	HttpClientModule,
-	MatChipsModule
+	MatChipsModule,
+	MatAutocompleteModule
 ]
 
 @NgModule({

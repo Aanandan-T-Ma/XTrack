@@ -29,7 +29,7 @@ export class DataComponent implements OnInit {
 	monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	days = Array(7).fill(0).map((x, i) => i);
 	dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-	categories: string[] = ['Any', 'Grocery', 'Stationary', 'Electronics', 'Rent'];
+	categories: string[];
 	dataSource: MatTableDataSource<any>;
 	pageSizes = [10, 15, 20, 30];
 	pageIndex = 0;
@@ -66,6 +66,15 @@ export class DataComponent implements OnInit {
 		});
 		this.changePeriod(0);
 		this.dataSource.paginator = this.paginator;
+		this.setCategories();
+	}
+
+	setCategories(): void {
+		let categorySet: Set<string> = new Set();
+		this.allData.forEach(data => {
+			categorySet.add(data.category);
+		});
+		this.categories = Array.from(categorySet);
 	}
 
 	generateDataSource(): void {
@@ -101,6 +110,9 @@ export class DataComponent implements OnInit {
 				return (d >= firstDay && d <= today);
 			})
 		}
+		else if(value === 4) {
+			this.periodData = this.allData;
+		}
 		else if(value === 5) {
 			this.periodData = this.allData.filter(data => {
 				let d = new Date(data.year, data.month, data.date);
@@ -114,11 +126,11 @@ export class DataComponent implements OnInit {
 		this.applyFilters();
 	}
 
-	rangeSelected(start: boolean, event: any): void {
-		if(start)
-			this.rangeDates[0] = event.value;
-		else
-			this.rangeDates[1] = event.value;
+	rangeSelected(start: boolean, value: any): void {
+		if(start) 
+			this.rangeDates[0] = value;
+		else 
+			this.rangeDates[1] = value;
 		if(this.rangeDates[0] && this.rangeDates[1]) {
 			this.periodData = this.allData.filter(data => {
 				let d = new Date(data.year, data.month, data.date);
@@ -266,7 +278,8 @@ export class DataComponent implements OnInit {
 		const dialogRef = this.dialog.open(DataModalComponent, {
 			data: {
 				newData: true,
-				title: this.title
+				title: this.title,
+				categories: this.categories
 			}
 		});
 		dialogRef.afterClosed().subscribe(result => {
@@ -289,6 +302,8 @@ export class DataComponent implements OnInit {
 						return db.getTime() - da.getTime();
 					});
 					this.changePeriod(this.selectedPeriod.value);
+					if(!this.categories.includes(result.category))
+						this.categories.push(result.category);
 				})
 			}
 		})
@@ -299,7 +314,8 @@ export class DataComponent implements OnInit {
 			data: {
 				newData: false,
 				title: this.title,
-				data: this.displayedData[index]
+				data: this.displayedData[index],
+				categories: this.categories
 			}
 		});
 		dialogRef.afterClosed().subscribe(result => {
@@ -311,6 +327,7 @@ export class DataComponent implements OnInit {
 					date: result.date.getDate(),
 					month: result.date.getMonth(),
 					year: result.date.getFullYear(),
+					day: result.date.getDay(),
 				}
 				this.dataService.editData(data, this.displayedData[index]._id).subscribe(res => {
 					console.log(res);
@@ -321,6 +338,8 @@ export class DataComponent implements OnInit {
 						}
 					}
 					this.changePeriod(this.selectedPeriod.value);
+					if(!this.categories.includes(result.category))
+						this.categories.push(result.category);
 				});
 			}
 		})

@@ -23,8 +23,8 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Enter a date range</mat-label>
                     <mat-date-range-input [rangePicker]="rangePicker">
-                      <input matStartDate placeholder="Start date" (dateInput)="rangeSelected(true, $event)">
-                      <input matEndDate placeholder="End date" (dateInput)="rangeSelected(false, $event)">
+                      <input matStartDate placeholder="Start date" (dateInput)="rangeSelected(true, $event.value)" [max]="today">
+                      <input matEndDate placeholder="End date" (dateInput)="rangeSelected(false, $event.value)" [max]="today">
                     </mat-date-range-input>
                     <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
                     <mat-date-range-picker #rangePicker color="primary"></mat-date-range-picker>
