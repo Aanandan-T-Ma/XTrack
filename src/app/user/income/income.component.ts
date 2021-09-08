@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
+import { Data } from 'src/app/shared/models';
 
 @Component({
 	selector: 'app-income',
@@ -8,14 +9,20 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class IncomeComponent implements OnInit {
 
-	allIncomes: any[];
+	allIncomes: Data[] = [];
 	displayedColumns = ['S.No', 'Source', 'Amount', 'Category', 'Date', 'Day', 'controls'];
+	type: string = 'income';
 
 	constructor(private dataService: DataService) { }
 
 	ngOnInit(): void { 
-		this.dataService.getData('incomes').subscribe(data => {
+		this.dataService.getData(this.type).subscribe(data => {
 			this.allIncomes = data;
+			this.allIncomes.sort((a, b) => {
+				let da = new Date(a.year, a.month, a.date);
+				let db = new Date(b.year, b.month, b.date);
+				return db.getTime() - da.getTime();
+			})
 		})
 	}
 

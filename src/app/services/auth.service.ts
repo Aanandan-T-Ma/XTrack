@@ -3,13 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { baseURL } from '../shared/baseURL';
+import { AuthResponse } from '../shared/models';
 import { ProcessHttpMsgService } from './process-httpmsg.service';
-
-interface AuthResponse {
-	success: boolean;
-	message: string;
-	token: string;
-}
 
 @Injectable({
 	providedIn: 'root'

@@ -1,1 +1,3 @@
-<app-data [allData]="allIncomes" [title]="'Income'" [displayedColumns]="displayedColumns"></app-data>
+<div *ngIf="allIncomes !== undefined">
+    <app-data [allData]="allIncomes" [title]="'Income'" [displayedColumns]="displayedColumns" [type]="type"></app-data>
+</div>

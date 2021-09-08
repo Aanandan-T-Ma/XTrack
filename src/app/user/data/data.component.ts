@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DataService } from 'src/app/services/data.service';
+import { ConfirmBoxComponent } from 'src/app/shared/confirm-box/confirm-box.component';
+import { Data } from 'src/app/shared/models';
 import { DataModalComponent } from './data-modal/data-modal.component';
 
 @Component({
@@ -31,49 +34,25 @@ export class DataComponent implements OnInit {
 	pageSizes = [10, 15, 20, 30];
 	pageIndex = 0;
 	pageSize = this.pageSizes[0];
-	displayedData: any[];
-	filteredData: any[];
-	periodData: any[];
+	displayedData: Data[];
+	filteredData: Data[];
+	periodData: Data[];
 	showFilters: boolean = false;
 
 	@ViewChild('paginator') paginator: MatPaginator;
-	@Input() allData: any[];
+	@Input() allData: Data[];
 	@Input() title: string;
 	@Input() displayedColumns: string[];
+	@Input() type: string;
 
 	filterForm: FormGroup;
 	sorted: any[] = ['0', 0];
 	rangeDates: any[] = [null, null];
+	customDates: Date[] = [];
 
-	constructor(private dialog: MatDialog) { }
+	constructor(private dialog: MatDialog, private dataService: DataService) { }
 
 	ngOnInit(): void {
-		this.allData = [{
-			date: 14,
-			month: 4,
-			year: 2020,
-			day: new Date(2020, 4, 14).getDay(),
-			category: 'Grocery',
-			name: 'Vegetables',
-			amount: 150,
-			type: 'expense'
-		}]
-		let da = new Date(2021, 7, 3);
-		let d = da.getDate();
-		let m = da.getMonth();
-		let y = da.getFullYear();
-		for(let i = 0; i < 30; i ++) {
-			let x = {...this.allData[0]};
-			x.name = 'Item ' + i;
-			x.date = d;
-			x.month = m;
-			x.year = y;
-			x.day = new Date(y, m, d).getDay();
-			if(d < 30) d++;
-			else if(m < 11) d = 1, m++;
-			else d = 1, m = 0, y++;
-			this.allData.push(x);
-		}
 		this.filterForm = new FormGroup({
 			date: new FormControl(''),
 			month: new FormControl(''),
@@ -146,6 +125,20 @@ export class DataComponent implements OnInit {
 		this.applyFilters();
 	}
 
+	addCustomDate(date: Date): void {
+		this.customDates.push(date);
+		console.log(this.customDates);
+		this.periodData = this.allData.filter(data => {
+			let d = new Date(data.year, data.month, data.date);
+			for(let i = 0; i < this.customDates.length; i++) {
+				if(d.getTime() === this.customDates[i].getTime())
+					return true;
+			}
+			return false;
+		});
+		this.applyFilters();
+	}
+
 	generateDataSource(): void {
 		this.dataSource = new MatTableDataSource(this.displayedData);
 	}
@@ -158,28 +151,27 @@ export class DataComponent implements OnInit {
 	}
 
 	applyFilters(): void {
-		/* if(this.filterForm.get('minAmount')?.value && this.filterForm.get('minAmount')?.value > this.filterForm.get('maxAmount')?.value) {
-			this.filterForm.get('maxAmount')?.setErrors({'very_less': true});
+		/* if(this.filterForm.value.minAmount !== '' && this.filterForm.value.maxAmount !== '' && 
+				this.filterForm.value.minAmount > this.filterForm.value.maxAmount) {
+			this.amountLessThanMin = true;
 			return;
 		} */
 		this.filteredData = this.periodData.filter(data => {
-			if(this.filterForm.get('date')?.value !== '' && data.date != this.filterForm.get('date')?.value) 
+			if(this.filterForm.value.date !== '' && data.date != this.filterForm.value.date) 
 				return false;
-			if(this.filterForm.get('month')?.value !== '' && data.month != this.filterForm.get('month')?.value) 
+			if(this.filterForm.value.month !== '' && data.month != this.filterForm.value.month) 
 				return false;
-			if(this.filterForm.get('year')?.value !== '' && data.year != this.filterForm.get('year')?.value) 
+			if(this.filterForm.value.year !== '' && data.year != this.filterForm.value.year)
 				return false;
-			if(this.filterForm.get('day')?.value !== '' && 
-				new Date(data.year, data.month, data.date).getDay() != this.filterForm.get('day')?.value)
+			if(this.filterForm.value.day !== '' && data.day != this.filterForm.value.day)
 				return false;
-			if(this.filterForm.get('category')?.value != 'Any' &&
-				data.category.toLowerCase() != this.filterForm.get('category')?.value.toLowerCase()) 
+			if(this.filterForm.value.category != 'Any' && data.category.toLowerCase() != this.filterForm.value.category.toLowerCase()) 
 				return false;
-			if(this.filterForm.get('name')?.value !== '' && !data.name.toLowerCase().includes(this.filterForm.get('name')?.value.toLowerCase())) 
+			if(this.filterForm.value.name !== '' && !data.name.toLowerCase().includes(this.filterForm.value.name.toLowerCase())) 
 				return false;
-			if(this.filterForm.get('minAmount')?.value !== '' && data.amount < this.filterForm.get('minAmount')?.value) 
+			if(this.filterForm.value.minAmount !== '' && data.amount < this.filterForm.value.minAmount) 
 				return false;
-			if(this.filterForm.get('maxAmount')?.value !== '' && data.amount > this.filterForm.get('maxAmount')?.value) 
+			if(this.filterForm.value.maxAmount !== '' && data.amount > this.filterForm.value.maxAmount) 
 				return false;
 			return true;
 		});
@@ -204,7 +196,7 @@ export class DataComponent implements OnInit {
 
 	sortData(s: string): void {
 		if(this.sorted[0] === s) {
-			this.filteredData.sort((a, b) => {
+			this.filteredData.sort((a: any, b: any) => {
 				let da, db;
 				if(s === 'date' || this.sorted[1] === 2) {
 					da = new Date(a.year, a.month, a.date);
@@ -231,7 +223,7 @@ export class DataComponent implements OnInit {
 			this.sorted[1] = (this.sorted[1] + 1) % 3;
 		}
 		else {
-			this.filteredData.sort((a, b) => {
+			this.filteredData.sort((a: any, b: any) => {
 				let da, db;
 				if(s === 'date') {
 					da = new Date(a.year, a.month, a.date);
@@ -260,11 +252,31 @@ export class DataComponent implements OnInit {
 		const dialogRef = this.dialog.open(DataModalComponent, {
 			data: {
 				newData: true,
-				type: this.title
+				title: this.title
 			}
 		});
 		dialogRef.afterClosed().subscribe(result => {
-			console.log(result);
+			if(result) {
+				let data = {
+					name: result.name,
+					amount: result.amount,
+					category: result.category,
+					date: result.date.getDate(),
+					month: result.date.getMonth(),
+					year: result.date.getFullYear(),
+					type: this.type
+				}
+				this.dataService.addData(data).subscribe(res => {
+					console.log(res);
+					this.allData.push(res);
+					this.allData.sort((a, b) => {
+						let da = new Date(a.year, a.month, a.date);
+						let db = new Date(b.year, b.month, b.date);
+						return db.getTime() - da.getTime();
+					});
+					this.changePeriod(this.selectedPeriod.value);
+				})
+			}
 		})
 	}
 
@@ -272,16 +284,59 @@ export class DataComponent implements OnInit {
 		const dialogRef = this.dialog.open(DataModalComponent, {
 			data: {
 				newData: false,
-				type: this.title,
+				title: this.title,
 				data: this.displayedData[index]
 			}
 		});
 		dialogRef.afterClosed().subscribe(result => {
-			console.log(result);
+			if(result) {
+				let data = {
+					name: result.name,
+					amount: result.amount,
+					category: result.category,
+					date: result.date.getDate(),
+					month: result.date.getMonth(),
+					year: result.date.getFullYear(),
+				}
+				this.dataService.editData(data, this.displayedData[index]._id).subscribe(res => {
+					console.log(res);
+					for(let i = 0; i < this.allData.length; i++) {
+						if(this.allData[i]._id === this.displayedData[index]._id) {
+							this.allData[i] = res;
+							break;
+						}
+					}
+					this.changePeriod(this.selectedPeriod.value);
+				});
+			}
 		})
 	}
 
 	openDeleteModal(index: number): void {
-		console.log(index);
+		const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+			data: {
+				message: `Delete ${this.title}`,
+				submessage: `Are you sure you want to delete this?`,
+				type: 'info',
+				icon: 'error',
+				confirmBtn: true,
+				cancelBtn: true
+			}
+		});
+		dialogRef.afterClosed().subscribe(result => {
+			if(result) {
+				this.dataService.deleteData(this.displayedData[index]._id).subscribe(res => {
+					console.log(res);
+					for(let i = 0; i < this.allData.length; i++) {
+						if(this.allData[i]._id === this.displayedData[index]._id) {
+							index = i;
+							break;
+						}
+					}
+					this.allData.splice(index, 1);
+					this.changePeriod(this.selectedPeriod.value);
+				})
+			}
+ 		})
 	}
 }

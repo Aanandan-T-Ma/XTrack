@@ -1,7 +1,12 @@
 <!-- 
+    message: Any string
+    submessage: Any string
+    type -> success, info
     icon -> tick: done
             !: error
-    type -> success, info
+    okBtn: boolean
+    confirmBtn: boolean
+    cancelBtn: boolean
  -->
 <div class="box-container">
     <div class="icon-div">
@@ -12,13 +17,13 @@
     <div class="message">{{ config.message }}</div>
     <div class="sub-message" *ngIf="config.submessage">{{ config.submessage }}</div>
     <mat-dialog-actions class="btn-container">
-        <button mat-raised-button mat-dialog-close *ngIf="config.cancelText">
+        <button mat-raised-button mat-dialog-close *ngIf="config.cancelBtn">
             Cancel
         </button>
-        <button mat-raised-button color="primary" mat-dialog-close *ngIf="config.okText">
+        <button mat-raised-button color="primary" mat-dialog-close *ngIf="config.okBtn">
             Ok
         </button>
-        <button mat-raised-button color="primary" *ngIf="config.confirmText">
+        <button mat-raised-button color="primary" *ngIf="config.confirmBtn" (click)="confirm()">
             Confirm
         </button>
     </mat-dialog-actions>

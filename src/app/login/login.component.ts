@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
 						submessage: 'Click the activation link sent to the registered mail id to activate your account',
 						type: 'success',
 						icon: 'done',
-						okText: true
+						okBtn: true
 					},
 					maxWidth: '70%',
 				});

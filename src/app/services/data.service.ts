@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { baseURL } from '../shared/baseURL';
+import { Data } from '../shared/models';
 import { ProcessHttpMsgService } from './process-httpmsg.service';
 
 @Injectable({
@@ -97,16 +98,24 @@ export class DataService {
 		}
 	];
 
-	getData(type: string): Observable<any> {
-		return this.http.get(`${baseURL}/cashflow/specific/${type}`)
+	getData(type: string): Observable<Data[]> {
+		return this.http.get<Data[]>(`${baseURL}/cashflow/specific/${type}`)
 			.pipe(catchError(this.processHTTPMsgService.handleError));
-		// if (type == 'expense') {
-		// 	return this.expenses;
-		// }
-		// else if (type == 'income') {
-		// 	return this.incomes;
-		// }
-		// return [];
+	}
+
+	addData(data: any): Observable<Data> {
+		return this.http.post<Data>(`${baseURL}/cashflow`, data)
+			.pipe(catchError(this.processHTTPMsgService.handleError));
+	}
+
+	editData(data: any, id: string): Observable<Data> {
+		return this.http.put<Data>(`${baseURL}/cashflow/${id}`, data)
+			.pipe(catchError(this.processHTTPMsgService.handleError));
+	}
+
+	deleteData(id: string): Observable<Data> {
+		return this.http.delete<Data>(`${baseURL}/cashflow/${id}`)
+			.pipe(catchError(this.processHTTPMsgService.handleError));
 	}
 	
 }
