@@ -112,12 +112,23 @@
                 </div>
             </form>
         </div>
-        <div class="custom-dates" *ngIf="selectedPeriod.value === 5">
-                <input matInput [matDatepicker]="datePicker" style="display: none;" (dateInput)="addCustomDate($event.value)">
-                <mat-datepicker-toggle matSuffix [for]="datePicker">
-                  <mat-icon matDatepickerToggleIcon>add_circle_outline</mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker touchUi #datePicker></mat-datepicker>
+        <div class="custom-dates-container" *ngIf="selectedPeriod.value === 5">
+            <div class="title">Dates Selected</div>
+            <mat-chip-list class="custom-date-list">
+                <mat-chip class="custom-date" *ngFor="let d of customDates" color="primary"
+                        selected (removed)="removeCustomDate(d)">
+                    {{ d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <div class="custom-date-input">
+                    <input matInput [matDatepicker]="datePicker" style="display: none;" [max]="today" 
+                            (dateInput)="addCustomDate($event.value)">
+                    <mat-datepicker-toggle matSuffix [for]="datePicker">
+                      <mat-icon matDatepickerToggleIcon>add_circle_outline</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker touchUi #datePicker></mat-datepicker>
+                </div>
+            </mat-chip-list>
         </div>
         <div class="table-container">
             <table mat-table [dataSource]="dataSource">

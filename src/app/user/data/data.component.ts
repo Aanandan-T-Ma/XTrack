@@ -49,6 +49,7 @@ export class DataComponent implements OnInit {
 	sorted: any[] = ['0', 0];
 	rangeDates: any[] = [null, null];
 	customDates: Date[] = [];
+	today: Date = new Date();
 
 	constructor(private dialog: MatDialog, private dataService: DataService) { }
 
@@ -65,6 +66,10 @@ export class DataComponent implements OnInit {
 		});
 		this.changePeriod(0);
 		this.dataSource.paginator = this.paginator;
+	}
+
+	generateDataSource(): void {
+		this.dataSource = new MatTableDataSource(this.displayedData);
 	}
 
 	changePeriod(value: number): void {
@@ -95,6 +100,16 @@ export class DataComponent implements OnInit {
 				let d = new Date(data.year, data.month, data.date);
 				return (d >= firstDay && d <= today);
 			})
+		}
+		else if(value === 5) {
+			this.periodData = this.allData.filter(data => {
+				let d = new Date(data.year, data.month, data.date);
+				for(let i = 0; i < this.customDates.length; i++) {
+					if(d.getTime() === this.customDates[i].getTime())
+						return true;
+				}
+				return false;
+			});
 		}
 		this.applyFilters();
 	}
@@ -128,19 +143,18 @@ export class DataComponent implements OnInit {
 	addCustomDate(date: Date): void {
 		this.customDates.push(date);
 		console.log(this.customDates);
-		this.periodData = this.allData.filter(data => {
-			let d = new Date(data.year, data.month, data.date);
-			for(let i = 0; i < this.customDates.length; i++) {
-				if(d.getTime() === this.customDates[i].getTime())
-					return true;
-			}
-			return false;
-		});
-		this.applyFilters();
+		this.changePeriod(5);
 	}
 
-	generateDataSource(): void {
-		this.dataSource = new MatTableDataSource(this.displayedData);
+	removeCustomDate(date: Date): void {
+		console.log(date);
+		for(let i = 0; i < this.customDates.length; i++) {
+			if(date.getTime() === this.customDates[i].getTime()) {
+				this.customDates.splice(i, 1);
+				break;
+			}
+		}
+		this.changePeriod(5);
 	}
 
 	changePage(event: any): void {

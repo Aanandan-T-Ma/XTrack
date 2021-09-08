@@ -20,6 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoadingComponent } from './loading/loading.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 const modules = [
 	CommonModule,
@@ -40,7 +41,8 @@ const modules = [
 	MatDatepickerModule,
 	MatNativeDateModule,
 	MatDialogModule,
-	HttpClientModule
+	HttpClientModule,
+	MatChipsModule
 ]
 
 @NgModule({
