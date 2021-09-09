@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivationComponent } from './activation/activation.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
 	{
 		path: 'login',
-		component: LoginComponent
+		component: LoginComponent,
+		canActivate: [LoginGuard]
 	},
 	{
 		path: 'user',
