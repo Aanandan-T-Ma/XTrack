@@ -1,0 +1,116 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.week, .month, .year {
+    width: 42%;
+    background-color: #673ab7;
+    border-radius: 5px;
+    position: relative;
+    padding: 10px;
+
+    .type-select {
+        position: absolute;
+        right: 0;
+
+        .select-label {
+            color: white;
+        }
+    
+        ::ng-deep {
+            .mat-select-arrow {
+                color: white;
+            }
+            .mat-select-value {
+                color: white;
+            }
+            .mat-form-field-underline {
+                background-color: white;
+            }
+        }
+    }
+}
+
+.year {
+    width: 90%;
+}
+
+.month {
+    .calendar {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        $size: 45px;
+        $border-width: 1px;
+
+        .row {
+            display: flex;
+
+            .cell {
+                border: $border-width solid white;
+                width: $size;
+                height: $size;
+                text-align: center;
+            }
+
+            .cell:first-child {
+                border-left: $border-width * 2 solid white;
+            }
+
+            .cell:last-child {
+                border-right: $border-width * 2 solid white;
+            }
+        }
+
+        .row:last-child {
+            .cell {
+                border-bottom: $border-width * 2 solid white;
+            }
+        }
+
+        .header {
+            text-align: center;
+            width: $size * 7 + $border-width * 12;
+            height: $size;
+            border: $border-width * 2 solid white;
+            border-bottom: $border-width solid white;
+            line-height: $size;
+            font-size: 16px;
+        }
+    }
+
+    .month-header {
+        height: 60px;
+
+        .title {
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+        }
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .week, .month {
+        width: 90%;
+
+        .type-select {
+            width: 120px;
+        }
+    }
+}

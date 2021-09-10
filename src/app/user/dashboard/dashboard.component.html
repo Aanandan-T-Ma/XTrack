@@ -1,1 +1,50 @@
-<p>dashboard works!</p>
+<div class="container">
+    <main class="main">
+        <div class="week mat-elevation-z8">
+            <mat-form-field class="type-select">
+                <mat-label class="select-label">Type</mat-label>
+                <mat-select [value]="0" (selectionChange)="changeType(true, $event.value)">
+                    <mat-option [value]="0">
+                        Expense
+                    </mat-option>
+                    <mat-option [value]="1">
+                        Income
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <canvas id="week-chart"></canvas>
+        </div>
+        <div class="month">
+            <div class="month-header">
+                <mat-form-field class="type-select">
+                    <mat-label class="select-label">Type</mat-label>
+                    <mat-select [value]="0" (selectionChange)="changeType(false, $event.value)">
+                        <mat-option [value]="0">
+                            Expense
+                        </mat-option>
+                        <mat-option [value]="1">
+                            Income
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="title">Monthly Data</div>
+            </div>
+            <div class="calendar">
+                <div class="header">{{ monthNames[today.getMonth()] + ' ' + today.getFullYear() }}</div>
+                <div class="row">
+                    <div class="cell" *ngFor="let d of dayNames">
+                        {{ d[0] }}
+                    </div>
+                </div>
+                <div class="row" *ngFor="let row of monthMatrix">
+                    <div class="cell" *ngFor="let cell of row">
+                        {{ cell }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="year">
+            <canvas id="year-chart"></canvas>
+        </div>
+    </main>
+</div>

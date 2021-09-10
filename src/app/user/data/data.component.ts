@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/services/data.service';
 import { ConfirmBoxComponent } from 'src/app/shared/confirm-box/confirm-box.component';
 import { Data } from 'src/app/shared/models';
+import { dayNames, monthNames } from 'src/app/shared/names';
 import { DataModalComponent } from './data-modal/data-modal.component';
 
 @Component({
@@ -26,9 +27,9 @@ export class DataComponent implements OnInit {
 	selectedPeriod = this.periods[0];
 	dates = Array(31).fill(0).map((x, i) => i + 1);
 	months = Array(12).fill(0).map((x, i) => i);
-	monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	days = Array(7).fill(0).map((x, i) => i);
-	dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	monthNames = monthNames;
+	dayNames = dayNames;
 	categories: string[];
 	dataSource: MatTableDataSource<any>;
 	pageSizes = [10, 15, 20, 30];

@@ -2,10 +2,11 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 .main {
-    width: 75%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -117,5 +117,10 @@ export class DataService {
 		return this.http.delete<Data>(`${baseURL}/cashflow/${id}`)
 			.pipe(catchError(this.processHTTPMsgService.handleError));
 	}
+
+	getAllData(): Observable<Data[]> {
+		return this.http.get<Data[]>(`${baseURL}/cashflow`)
+			.pipe(catchError(this.processHTTPMsgService.handleError));
+	}
 	
 }
