@@ -379,7 +379,22 @@ export class DataComponent implements OnInit {
  		})
 	}
 
+	showWarning(): void {
+		this.dialog.open(ConfirmBoxComponent, {
+			data: {
+				message: `There is no data to be saved`,
+				type: 'info',
+				icon: 'error',
+				okBtn: true
+			}
+		})
+	}
+
 	generatePdf(): void {
+		if(this.filteredData.length === 0) {
+			this.showWarning();
+			return;
+		}
         const htmlToPdfmake = require('html-to-pdfmake');
         const content = this.getPdfContent();
         const val: any = htmlToPdfmake(content, {
@@ -399,7 +414,7 @@ export class DataComponent implements OnInit {
             header: (currentPage: any, pageCount: any, pageSize: any) => {
                 return [
                     {
-                        text: 'XTrack',
+                        text: '',
                         alignment: 'left',
                         style: 'header'
                     },
@@ -433,11 +448,12 @@ export class DataComponent implements OnInit {
 
 	getPdfContent(): string {
 		let content = ``;
-		content += `
-			<div style="text-align: center;">
-				<img src="${logoImageUrl}" />
-			</div>`;
-		content += `<div style="text-align: center; font-weight: bold;">Your ${this.title}s</div>`;
+		content += `<div style="text-align: center;">
+						<img src="${logoImageUrl}" />
+					</div>`;
+		content += `<div style="text-align: center; font-weight: bold; margin: 15px;">
+						Your ${this.title}s ${this.getPeriodString()}
+					</div>`;
 		content += `<table> <tr>`;
 		for(let i = 0; i < 5; i++)
 			content += `<th>${this.displayedColumns[i]}</th>`;
@@ -456,5 +472,47 @@ export class DataComponent implements OnInit {
 		}
 		content += `</table>`;
 		return content;
+	}
+
+	getPeriodString(): string {
+		let period;
+		switch(this.selectedPeriod.value) {
+			case 1:
+				let sunday = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - this.today.getDay());
+				period = `from ${sunday.getDate()}-${monthNames[sunday.getMonth()]}-${sunday.getFullYear()} to 
+							${this.today.getDate()}-${monthNames[this.today.getMonth()]}-${this.today.getFullYear()}`;
+				break;
+			case 2:
+				period = `from 1-${monthNames[this.today.getMonth()]}-${this.today.getFullYear()} to 
+							${this.today.getDate()}-${monthNames[this.today.getMonth()]}-${this.today.getFullYear()}`;
+				break;
+			case 3:
+				period = `from 1-January-${this.today.getFullYear()} to 
+							${this.today.getDate()}-${monthNames[this.today.getMonth()]}-${this.today.getFullYear()}`;
+				break;
+			case 4:
+				if(this.rangeDates[0] && this.rangeDates[1])
+					period = `from ${this.rangeDates[0].getDate()}-${monthNames[this.rangeDates[0].getMonth()]}-
+								${this.rangeDates[0].getFullYear()} to ${this.rangeDates[1].getDate()}-
+								${monthNames[this.rangeDates[1].getMonth()]}-${this.rangeDates[1].getFullYear()}`;
+				else if(this.rangeDates[0])
+					period = `from ${this.rangeDates[0].getDate()}-${monthNames[this.rangeDates[0].getMonth()]}-
+								${this.rangeDates[0].getFullYear()} to ${this.today.getDate()}-
+								${monthNames[this.today.getMonth()]}-${this.today.getFullYear()}`;
+				else if(this.rangeDates[1])
+					period = `till ${this.rangeDates[1].getDate()}-${monthNames[this.rangeDates[1].getMonth()]}-
+								${this.rangeDates[1].getFullYear()}`;
+				else period = '';
+				break;
+			case 5:
+				period = 'on ';
+				this.customDates.forEach((date, i) => {
+					period += `${date.getDate()}-${monthNames[date.getMonth()]}-${date.getFullYear()}`;
+					if(i != this.customDates.length - 1) period += ', ';
+				});
+				break;
+			default: period = '';
+		}
+		return period;
 	}
 }
