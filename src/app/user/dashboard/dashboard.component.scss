@@ -9,7 +9,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     padding: 20px;
     flex-wrap: wrap;
     gap: 20px;
@@ -21,31 +21,85 @@
     border-radius: 5px;
     position: relative;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 10px 1px rgb(50, 50, 50);
 
-    .type-select {
-        position: absolute;
-        right: 0;
+    &-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin: auto;
+        flex-wrap: wrap;
 
-        .select-label {
+        * {
+            margin-left: 20px;
+            font-size: 1.2rem;
             color: white;
         }
-    
-        ::ng-deep {
-            .mat-select-arrow {
-                color: white;
-            }
-            .mat-select-value {
-                color: white;
-            }
-            .mat-form-field-underline {
-                background-color: white;
-            }
+
+        .total {
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
         }
     }
 }
 
+.week {
+    &-header {
+        height: 60px;
+
+        .title {
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+            padding-top: 10px;
+        }
+
+        .type-select {
+            position: absolute;
+            right: 0;
+            top: 6px;
+    
+            .select-label {
+                color: white;
+            }
+        
+            ::ng-deep {
+                .mat-select-arrow {
+                    color: white;
+                }
+                .mat-select-value {
+                    color: white;
+                }
+                .mat-form-field-underline {
+                    background-color: white;
+                }
+            }
+        }
+    }
+
+    &-body {
+        width: 75%;
+        margin: auto;
+    }
+}
+
 .year {
-    width: 90%;
+    width: 88%;
+
+    &-header {
+        .title {
+            color: white;
+            font-size: 20px;
+            font-weight: 500;
+            padding-top: 10px;
+            text-align: center;
+        }
+    }
 }
 
 .month {
@@ -55,8 +109,9 @@
         flex-direction: column;
         align-items: center;
         color: white;
-        $size: 45px;
-        $border-width: 1px;
+        margin: auto;
+        $size: 2.5rem;
+        $border-width: 0.0625rem;
 
         .row {
             display: flex;
@@ -66,6 +121,14 @@
                 width: $size;
                 height: $size;
                 text-align: center;
+                line-height: $size;
+                // disbale text selection
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
             }
 
             .cell:first-child {
@@ -74,6 +137,24 @@
 
             .cell:last-child {
                 border-right: $border-width * 2 solid white;
+            }
+
+            .no-day {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            .day {
+                transition-duration: .2s;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.2);
+                }
+            }
+
+            .today {
+                background-color: rgba(255, 255, 255, 0.7);
+                color: #4b0eb4;
+                font-weight: bold;
             }
         }
 
@@ -94,19 +175,56 @@
         }
     }
 
-    .month-header {
+    &-header {
         height: 60px;
 
         .title {
             color: white;
             font-size: 20px;
             font-weight: 500;
+            padding-top: 10px;
+        }
+    }
+}
+
+::ng-deep .tooltip {
+    white-space: pre-line;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media only screen and (max-width: 1200px) {
+    .week {
+        &-body {
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .month {
+        .calendar {
+            $size: 2rem;
+            $border-width: 0.0625rem;
+
+            .row {
+                .cell {
+                    width: $size;
+                    height: $size;
+                    line-height: $size;
+                }
+            }
+
+            .header {
+                width: $size * 7 + $border-width * 12;
+                height: $size;
+                line-height: $size;
+            }
         }
     }
 }
 
 @media only screen and (max-width: 700px) {
-    .week, .month {
+    .week, .month, .year {
         width: 90%;
 
         .type-select {

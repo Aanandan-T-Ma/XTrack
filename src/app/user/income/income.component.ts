@@ -9,7 +9,7 @@ import { Data } from 'src/app/shared/models';
 })
 export class IncomeComponent implements OnInit {
 
-	allIncomes: Data[] = [];
+	allIncomes: Data[];
 	displayedColumns = ['S.No', 'Source', 'Amount', 'Category', 'Date', 'Day', 'controls'];
 	type: string = 'income';
 

@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const modules = [
 	CommonModule,
@@ -44,7 +45,8 @@ const modules = [
 	MatDialogModule,
 	HttpClientModule,
 	MatChipsModule,
-	MatAutocompleteModule
+	MatAutocompleteModule,
+	MatTooltipModule
 ]
 
 @NgModule({

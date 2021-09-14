@@ -1,24 +1,11 @@
 <div class="container">
     <main class="main">
-        <div class="week mat-elevation-z8">
-            <mat-form-field class="type-select">
-                <mat-label class="select-label">Type</mat-label>
-                <mat-select [value]="0" (selectionChange)="changeType(true, $event.value)">
-                    <mat-option [value]="0">
-                        Expense
-                    </mat-option>
-                    <mat-option [value]="1">
-                        Income
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <canvas id="week-chart"></canvas>
-        </div>
-        <div class="month">
-            <div class="month-header">
+        <div class="week">
+            <div class="week-header">
+                <div class="title">Weekly Data</div>
                 <mat-form-field class="type-select">
                     <mat-label class="select-label">Type</mat-label>
-                    <mat-select [value]="0" (selectionChange)="changeType(false, $event.value)">
+                    <mat-select [value]="0" (selectionChange)="changeType($event.value)">
                         <mat-option [value]="0">
                             Expense
                         </mat-option>
@@ -27,6 +14,13 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
+            <div class="week-body">
+                <canvas id="week-chart"></canvas>
+            </div>
+        </div>
+        <div class="month">
+            <div class="month-header">
                 <div class="title">Monthly Data</div>
             </div>
             <div class="calendar">
@@ -37,13 +31,24 @@
                     </div>
                 </div>
                 <div class="row" *ngFor="let row of monthMatrix">
-                    <div class="cell" *ngFor="let cell of row">
+                    <div class="cell" *ngFor="let cell of row" matTooltipClass="tooltip" matTooltipPosition="above"
+                        [ngClass]="cell === ' ' ? 'no-day' : (cell == today.getDate() ? 'today' : 'day')"
+                        [matTooltip]="'Income: ' + monthData[1][cell - 1] + '\nExpense: ' + monthData[0][cell - 1]" 
+                        [matTooltipDisabled]="cell === ' ' || cell > today.getDate()">
                         {{ cell }}
                     </div>
                 </div>
             </div>
+            <div class="month-footer">
+                <div class="total">Total</div>
+                <div class="income">Income: {{ totalMonthData[1] }}</div>
+                <div class="expense">Expense: {{ totalMonthData[0] }}</div>
+            </div>
         </div>
         <div class="year">
+            <div class="year-header">
+                <div class="title">Yearly Data</div>
+            </div>
             <canvas id="year-chart"></canvas>
         </div>
     </main>

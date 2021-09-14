@@ -19,17 +19,24 @@ export class DashboardComponent implements OnInit {
 	expenses: Data[] = [];
 	weekChart: Chart;
 	yearChart: Chart;
-	weekData: Data[][] = [[], []];
-	monthData: Data[][] = [[], []];
-	yearData: Data[][] = [[], []];
+	weekData: number[][] = [];
+	monthData: number[][] = [];
+	yearData: number[][] = [];
 	monthMatrix: any[][];
 	monthNames = monthNames;
 	dayNames = dayNames;
 	today: Date = new Date();
+	totalMonthData: number[] = [0, 0];
 
 	constructor(private dataService: DataService) { }
 
 	ngOnInit(): void {
+		for(let i = 0; i < 2; i++) {
+			this.weekData.push(Array(7).fill(0));
+			this.monthData.push(Array(31).fill(0));
+			this.yearData.push(Array(12).fill(0));
+		}
+
 		let sunday = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - this.today.getDay());
 		let mfirstDay = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
 		let yfirstDay = new Date(this.today.getFullYear(), 0, 1);
@@ -39,26 +46,31 @@ export class DashboardComponent implements OnInit {
 				if (d.type === 'income'){
 					this.incomes.push(d);
 					if(date >= sunday)
-						this.weekData[1].push(d);
+						this.weekData[1][d.day] += d.amount;
 					if(date >= mfirstDay)
-						this.monthData[1].push(d);
+						this.monthData[1][d.date - 1] += d.amount;
 					if(date >= yfirstDay)
-						this.yearData[1].push(d);
+						this.yearData[1][d.month] += d.amount;
 				}
 				else if(d.type === 'expense'){
 					this.expenses.push(d);
 					if(date >= sunday)
-						this.weekData[0].push(d);
+						this.weekData[0][d.day] += d.amount;
 					if(date >= mfirstDay)
-						this.monthData[0].push(d);
+						this.monthData[0][d.date - 1] += d.amount;
 					if(date >= yfirstDay)
-						this.yearData[0].push(d);
+						this.yearData[0][d.month] += d.amount;
 				}
 			});
+			for(let i = 0; i < 31; i++) {
+				this.monthData[0][i] += i;
+			}
+			console.log(this.monthData);
+			this.createWeekChart(0);
+			this.createYearChart();
+			this.monthMatrix = this.getMonthStructure();
+			this.calculateMonthData();
 		});
-		this.createWeekChart(0);
-		this.createYearChart();
-		this.monthMatrix = this.getMonthStructure();
 	}
 
 	createWeekChart(index: number): void {
@@ -68,9 +80,8 @@ export class DashboardComponent implements OnInit {
 		// 	data[d.day] += d.amount;
 		// });
 		let data = [10, 5, 34, 18, 23, 45, 14];
-		if(index == 1) {
+		if(index == 1)
 			data = [23, 80, 12, 4, 26, 53, 24]
-		}
 		this.weekChart = new Chart('week-chart', {
 			type: 'pie',
 			data: {
@@ -90,17 +101,9 @@ export class DashboardComponent implements OnInit {
 						labels: {
 							color: 'white'
 						}
-					},
-					title: {
-						display: true,
-						text: 'Weekly Data',
-						font: {
-							size: 20
-						},
-						color: 'white',
-						align: 'start'
 					}
-				}
+				},
+				aspectRatio: 1
 			}
 		})
 	}
@@ -133,24 +136,26 @@ export class DashboardComponent implements OnInit {
 						labels: {
 							color: 'white'
 						}
-					},
-					title: {
-						display: true,
-						text: 'Yearly Data',
-						font: {
-							size: 20
-						},
-						color: 'white'
 					}
 				},
 				scales: {
 					x: {
 						ticks: {
 							color: 'white'
+						},
+						title: {
+							display: true,
+							text: 'Month',
+							color: 'white'
 						}
 					},
 					y: {
 						ticks: {
+							color: 'white'
+						},
+						title: {
+							display: true,
+							text: 'Amount',
 							color: 'white'
 						}
 					}
@@ -158,22 +163,20 @@ export class DashboardComponent implements OnInit {
 				interaction: {
 					intersect: false,
 					mode: 'index'
-				}
+				},
+				aspectRatio: (screen.width >= 500 ? 2.5 : 1)
 			}
 		})
 	}
 
-	changeType(week: boolean, index: number): void {
-		if(week) {
-			this.weekChart.destroy();
-			this.createWeekChart(index);
-		}
-		else {}
+	changeType(index: number): void {
+		this.weekChart.destroy();
+		this.createWeekChart(index);
 	}
 
     getMonthStructure(): any[][] {
         const day = new Date(this.today.getFullYear(), this.today.getMonth(), 1).getDay();
-        var matrix = [], week = [];
+        let matrix: any[] = [], week: any[] = [];
         for(let i = 0; i < day; i++) week.push(' ');
         var curDate = 1, lastDate = new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0).getDate();
         while(curDate <= lastDate){
@@ -189,5 +192,11 @@ export class DashboardComponent implements OnInit {
         }
         return matrix;
     }
+
+	calculateMonthData(): void {
+		this.monthData.forEach((d, i) => {
+			this.totalMonthData[i] = d.reduce((sum, cur) => sum + cur, 0);
+		});
+	}
 
 }
