@@ -6,8 +6,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/services/data.service';
 import { ConfirmBoxComponent } from 'src/app/shared/confirm-box/confirm-box.component';
 import { Data } from 'src/app/shared/models';
-import { dayNames, monthNames } from 'src/app/shared/names';
+import { dayNames, logoImageUrl, monthNames } from 'src/app/shared/names';
 import { DataModalComponent } from './data-modal/data-modal.component';
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
 	selector: 'app-data',
@@ -372,5 +377,84 @@ export class DataComponent implements OnInit {
 				})
 			}
  		})
+	}
+
+	generatePdf(): void {
+        const htmlToPdfmake = require('html-to-pdfmake');
+        const content = this.getPdfContent();
+        const val: any = htmlToPdfmake(content, {
+            tableAutoSize: true,
+        });
+
+        let dd: any = {
+            content: val,
+            footer: (currentPage: any, pageCount: any) => {
+                return [
+                    {
+                        text: currentPage.toString() + ' of ' + pageCount,
+                        style: 'footer',
+                    },
+                ];
+            },
+            header: (currentPage: any, pageCount: any, pageSize: any) => {
+                return [
+                    {
+                        text: 'XTrack',
+                        alignment: 'left',
+                        style: 'header'
+                    },
+                    {
+                        canvas: [
+                            {
+                                type: 'rect',
+                                x: 170,
+                                y: 32,
+                                w: pageSize.width - 170,
+                                h: 40,
+                            },
+                        ],
+                    }
+                ];
+            },
+            styles: {
+                header: {
+                    margin: [8, 10, 10, 8],
+                    italics: true,
+                },
+                footer: {
+                    alignment: 'center',
+                    margin: [0, 5, 0, 0],
+                },
+            },
+        };
+
+        pdfMake.createPdf(dd).open();
+    }
+
+	getPdfContent(): string {
+		let content = ``;
+		content += `
+			<div style="text-align: center;">
+				<img src="${logoImageUrl}" />
+			</div>`;
+		content += `<div style="text-align: center; font-weight: bold;">Your ${this.title}s</div>`;
+		content += `<table> <tr>`;
+		for(let i = 0; i < 5; i++)
+			content += `<th>${this.displayedColumns[i]}</th>`;
+		content += `<th>Day</th>`;
+		content += `</tr>`;
+		// Total width: 610
+		for(let i = 0; i < this.filteredData.length; i++) {
+			content += `<tr>
+							<td width="35">${i + 1}</td>
+							<td width="140">${this.filteredData[i].name}</td>
+							<td width="70">${this.filteredData[i].amount}</td>
+							<td width="120">${this.filteredData[i].category}</td>
+							<td width="160">${this.filteredData[i].date} - ${monthNames[this.filteredData[i].month]} - ${this.filteredData[i].year}</td>
+							<td width="85">${dayNames[this.filteredData[i].day]}</td>
+						</tr>`
+		}
+		content += `</table>`;
+		return content;
 	}
 }

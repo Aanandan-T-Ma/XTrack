@@ -221,5 +221,8 @@
         <mat-paginator #paginator [length]="filteredData.length" [pageSizeOptions]="pageSizes" showFirstLastButtons
                 (page)="changePage($event)" [pageSize]="pageSize" [pageIndex]="pageIndex">
         </mat-paginator>
+        <div class="footer-btns">
+            <button mat-flat-button (click)="generatePdf()">Save</button>
+        </div>
     </main>
 </div>
