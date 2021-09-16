@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
 	dayNames = dayNames;
 	today: Date = new Date();
 	totalMonthData: number[] = [0, 0];
+	loading: boolean = true;
 
 	constructor(private dataService: DataService) { }
 
@@ -65,11 +66,11 @@ export class DashboardComponent implements OnInit {
 			for(let i = 0; i < 31; i++) {
 				this.monthData[0][i] += i;
 			}
-			console.log(this.monthData);
 			this.createWeekChart(0);
 			this.createYearChart();
 			this.monthMatrix = this.getMonthStructure();
 			this.calculateMonthData();
+			this.loading = false;
 		});
 	}
 

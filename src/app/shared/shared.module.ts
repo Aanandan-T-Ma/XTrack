@@ -23,6 +23,7 @@ import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ScreenLoaderComponent } from './screen-loader/screen-loader.component';
 
 const modules = [
 	CommonModule,
@@ -52,9 +53,10 @@ const modules = [
 @NgModule({
 	declarations: [
     	LoadingComponent,
-     	ConfirmBoxComponent
+     	ConfirmBoxComponent,
+      	ScreenLoaderComponent
   	],
 	imports: [modules],
-	exports: [modules, LoadingComponent]
+	exports: [modules, LoadingComponent, ScreenLoaderComponent]
 })
 export class SharedModule { }

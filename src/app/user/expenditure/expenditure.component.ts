@@ -12,6 +12,7 @@ export class ExpenditureComponent implements OnInit {
 	allExpenses: Data[];
 	displayedColumns = ['S.No', 'Spent On', 'Amount', 'Category', 'Date', 'Day', 'controls'];
 	type: string = 'expense';
+	loading: boolean = true;
 
 	constructor(private dataService: DataService) { }
 
@@ -22,7 +23,8 @@ export class ExpenditureComponent implements OnInit {
 				let da = new Date(a.year, a.month, a.date);
 				let db = new Date(b.year, b.month, b.date);
 				return db.getTime() - da.getTime();
-			})
+			});
+			this.loading = false;
 		})
 	}
 

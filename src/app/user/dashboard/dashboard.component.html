@@ -1,7 +1,7 @@
 <div class="container">
     <main class="main">
         <div class="week">
-            <div class="week-header">
+            <div class="week-header" *ngIf="!loading">
                 <div class="title">Weekly Data</div>
                 <mat-form-field class="type-select">
                     <mat-label class="select-label">Type</mat-label>
@@ -20,10 +20,10 @@
             </div>
         </div>
         <div class="month">
-            <div class="month-header">
+            <div class="month-header" *ngIf="!loading">
                 <div class="title">Monthly Data</div>
             </div>
-            <div class="calendar">
+            <div class="calendar" *ngIf="!loading">
                 <div class="header">{{ monthNames[today.getMonth()] + ' ' + today.getFullYear() }}</div>
                 <div class="row">
                     <div class="cell" *ngFor="let d of dayNames">
@@ -39,17 +39,18 @@
                     </div>
                 </div>
             </div>
-            <div class="month-footer">
+            <div class="month-footer" *ngIf="!loading">
                 <div class="total">Total</div>
                 <div class="income">Income: {{ totalMonthData[1] }}</div>
                 <div class="expense">Expense: {{ totalMonthData[0] }}</div>
             </div>
         </div>
         <div class="year">
-            <div class="year-header">
+            <div class="year-header" *ngIf="!loading">
                 <div class="title">Yearly Data</div>
             </div>
             <canvas id="year-chart"></canvas>
         </div>
     </main>
 </div>
+<app-screen-loader *ngIf="loading"></app-screen-loader>

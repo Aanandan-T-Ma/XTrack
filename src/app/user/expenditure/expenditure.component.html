@@ -1,3 +1,5 @@
-<div *ngIf="allExpenses !== undefined">
+<div *ngIf="!loading">
     <app-data [allData]="allExpenses" [title]="'Expenditure'" [displayedColumns]="displayedColumns" [type]="type"></app-data>
 </div>
+<div class="loading-main" *ngIf="loading"></div>
+<app-screen-loader *ngIf="loading"></app-screen-loader>

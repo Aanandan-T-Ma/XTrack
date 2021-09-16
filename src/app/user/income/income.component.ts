@@ -12,6 +12,7 @@ export class IncomeComponent implements OnInit {
 	allIncomes: Data[];
 	displayedColumns = ['S.No', 'Source', 'Amount', 'Category', 'Date', 'Day', 'controls'];
 	type: string = 'income';
+	loading: boolean = true;
 
 	constructor(private dataService: DataService) { }
 
@@ -22,7 +23,8 @@ export class IncomeComponent implements OnInit {
 				let da = new Date(a.year, a.month, a.date);
 				let db = new Date(b.year, b.month, b.date);
 				return db.getTime() - da.getTime();
-			})
+			});
+			this.loading = false;
 		})
 	}
 
