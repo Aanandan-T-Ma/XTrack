@@ -123,6 +123,7 @@
                 height: $size;
                 text-align: center;
                 line-height: $size;
+                background-color: rgba(255, 255, 255, 0.1);
                 // disbale text selection
                 -webkit-touch-callout: none;
                 -webkit-user-select: none;
@@ -157,6 +158,10 @@
                 color: #4b0eb4;
                 font-weight: bold;
             }
+
+            .day-name {
+                font-weight: bold;
+            }
         }
 
         .row:last-child {
@@ -173,6 +178,7 @@
             border-bottom: $border-width solid white;
             line-height: $size;
             font-size: 16px;
+            background-color: rgba(0, 0, 0, 0.2);
         }
     }
 

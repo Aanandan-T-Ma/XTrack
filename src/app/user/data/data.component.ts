@@ -451,18 +451,18 @@ export class DataComponent implements OnInit {
 		content += `<div style="text-align: center;">
 						<img src="${logoImageUrl}" />
 					</div>`;
-		content += `<div style="text-align: center; font-weight: bold; margin: 15px;">
+		content += `<div style="text-align: center; font-weight: bold; margin: 15px; font-size: 20px;">
 						Your ${this.title}s ${this.getPeriodString()}
 					</div>`;
 		content += `<table> <tr>`;
 		for(let i = 0; i < 5; i++)
-			content += `<th>${this.displayedColumns[i]}</th>`;
-		content += `<th>Day</th>`;
+			content += `<th style="text-align: center;">${this.displayedColumns[i]}</th>`;
+		content += `<th style="text-align: center;">Day</th>`;
 		content += `</tr>`;
 		// Total width: 610
 		for(let i = 0; i < this.filteredData.length; i++) {
 			content += `<tr>
-							<td width="35">${i + 1}</td>
+							<td width="35" style="text-align: center;">${i + 1}</td>
 							<td width="140">${this.filteredData[i].name}</td>
 							<td width="70">${this.filteredData[i].amount}</td>
 							<td width="120">${this.filteredData[i].category}</td>

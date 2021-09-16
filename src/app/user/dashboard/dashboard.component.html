@@ -26,7 +26,7 @@
             <div class="calendar" *ngIf="!loading">
                 <div class="header">{{ monthNames[today.getMonth()] + ' ' + today.getFullYear() }}</div>
                 <div class="row">
-                    <div class="cell" *ngFor="let d of dayNames">
+                    <div class="cell day-name" *ngFor="let d of dayNames">
                         {{ d[0] }}
                     </div>
                 </div>

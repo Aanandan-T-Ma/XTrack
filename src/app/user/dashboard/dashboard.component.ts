@@ -63,9 +63,9 @@ export class DashboardComponent implements OnInit {
 						this.yearData[0][d.month] += d.amount;
 				}
 			});
-			for(let i = 0; i < 31; i++) {
-				this.monthData[0][i] += i;
-			}
+			// for(let i = 0; i < 31; i++) {
+			// 	this.monthData[0][i] += i;
+			// }
 			this.createWeekChart(0);
 			this.createYearChart();
 			this.monthMatrix = this.getMonthStructure();
@@ -75,23 +75,25 @@ export class DashboardComponent implements OnInit {
 	}
 
 	createWeekChart(index: number): void {
-		// let wdata = this.weekData[index];
-		// let data = Array(7).fill(0);
-		// wdata.forEach(d => {
-		// 	data[d.day] += d.amount;
-		// });
-		let data = [10, 5, 34, 18, 23, 45, 14];
-		if(index == 1)
-			data = [23, 80, 12, 4, 26, 53, 24]
+		let days = dayNames;
+		let bgColors = ['#0ad118', '#f71919', '#b300ff', '#fbff03', '#ff8903', '#f007b6', '#0f37d6'];
+		let data = Array(7).fill(0);
+		this.weekData[index].forEach((d, i) => data[i] += d);
+		let total = this.weekData[index].reduce((sum, cur) => sum + cur, 0);
+		if(total === 0) {
+			days = [`No ${index === 0 ? 'expenses' : 'incomes'} this week`];
+			bgColors = ['gray'];
+			data = [1];
+		}
 		this.weekChart = new Chart('week-chart', {
 			type: 'pie',
 			data: {
-				labels: dayNames,
+				labels: days,
 				datasets: [
 					{
 						label: 'Days',
 						data: data,
-						backgroundColor: ['red', 'blue', 'green', 'yellow', 'violet', 'orange', 'pink']
+						backgroundColor: bgColors
 					}
 				]
 			},
@@ -102,6 +104,9 @@ export class DashboardComponent implements OnInit {
 						labels: {
 							color: 'white'
 						}
+					},
+					tooltip: {
+						enabled: data.length > 1
 					}
 				},
 				aspectRatio: 1
@@ -117,14 +122,14 @@ export class DashboardComponent implements OnInit {
 				datasets: [
 					{
 						label: 'Income',
-						data: [10, 5, 23, 18, 54, 45, 14, 34, 18, 38, 45, 65],
+						data: this.yearData[1],
 						backgroundColor: 'hsl(120, 75%, 40%)',
 						borderColor: 'hsl(120, 75%, 40%)',
 						fill: false
 					},
 					{
 						label: 'Expense',
-						data: [23, 80, 12, 4, 26, 53, 24, 54, 45, 14, 34, 18],
+						data: this.yearData[0],
 						backgroundColor: 'red',
 						borderColor: 'red',
 						fill: false
