@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -17,12 +18,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { LoadingComponent } from './loading/loading.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+
+import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
+import { LoadingComponent } from './loading/loading.component';
 import { ScreenLoaderComponent } from './screen-loader/screen-loader.component';
 
 const modules = [
@@ -47,7 +49,8 @@ const modules = [
 	HttpClientModule,
 	MatChipsModule,
 	MatAutocompleteModule,
-	MatTooltipModule
+	MatTooltipModule,
+	MatMenuModule
 ]
 
 @NgModule({

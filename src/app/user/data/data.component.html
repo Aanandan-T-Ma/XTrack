@@ -222,7 +222,16 @@
                 (page)="changePage($event)" [pageSize]="pageSize" [pageIndex]="pageIndex">
         </mat-paginator>
         <div class="footer-btns">
-            <button mat-flat-button (click)="generatePdf()">Save</button>
+            <button mat-flat-button (click)="generatePdf()" [disabled]="displayedData.length === 0"
+                [ngClass]="displayedData.length > 0 ? 'btn' : ''">
+                <mat-icon>print</mat-icon>
+                Print
+            </button>
+            <button mat-flat-button (click)="sendMail()" [disabled]="displayedData.length === 0"
+                [ngClass]="displayedData.length > 0 ? 'btn' : ''">
+                <mat-icon>email</mat-icon>
+                Send to Mail
+            </button>
         </div>
     </main>
 </div>

@@ -2,7 +2,18 @@
     <mat-sidenav #sidenav class="sidenav" [attr.role]="(isHandset | async) ? 'dialog' : 'navigation'"
             [mode]="(isHandset | async) ? 'over' : 'side'" [opened]="!(isHandset | async)">
         <mat-toolbar class="toolbar">
-            <div class="toolbar-title">{{ username }}</div>
+            <div class="toolbar-title">
+                {{ username }}
+                <button mat-icon-button class="btn" [matMenuTriggerFor]="menu" aria-label="Password change">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openPasswordModal()">
+                        <mat-icon>lock</mat-icon>
+                        <span>Change Password</span>
+                    </button>
+                </mat-menu>
+            </div>
         </mat-toolbar>
         <mat-nav-list class="nav-list">
             <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link' : '')"
@@ -39,7 +50,8 @@
             <button class="menu-btn" mat-icon-button (click)="sidenav.toggle()" *ngIf="isHandset | async">
                 <mat-icon aria-label="Side Nav toggle icon">menu</mat-icon>
             </button>
-            <div class="nav-header" *ngIf="pageTitle">{{ pageTitle[0].toUpperCase() + pageTitle.substring(1) }}</div>
+            <!-- <div class="nav-header" *ngIf="pageTitle">{{ pageTitle[0].toUpperCase() + pageTitle.substring(1) }}</div> -->
+            <div class="nav-header" *ngIf="pageTitle">XTrack {{ pageTitle === 'dashboard' ? ' - Dashboard' : '' }}</div>
         </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>

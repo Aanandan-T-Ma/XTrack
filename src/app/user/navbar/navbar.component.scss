@@ -29,3 +29,12 @@
         margin-right: 10px;
     }
 }
+
+.toolbar-title {
+    width: 100%;
+    line-height: 40px;
+
+    .btn {
+        float: right;
+    }
+}

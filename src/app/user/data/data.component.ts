@@ -11,6 +11,7 @@ import { DataModalComponent } from './data-modal/data-modal.component';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { MailService } from 'src/app/services/mail.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -57,7 +58,7 @@ export class DataComponent implements OnInit {
 	customDates: Date[] = [];
 	today: Date = new Date();
 
-	constructor(private dialog: MatDialog, private dataService: DataService) { }
+	constructor(private dialog: MatDialog, private dataService: DataService, private mailService: MailService) { }
 
 	ngOnInit(): void {
 		this.filterForm = new FormGroup({
@@ -160,12 +161,10 @@ export class DataComponent implements OnInit {
 
 	addCustomDate(date: Date): void {
 		this.customDates.push(date);
-		console.log(this.customDates);
 		this.changePeriod(5);
 	}
 
 	removeCustomDate(date: Date): void {
-		console.log(date);
 		for(let i = 0; i < this.customDates.length; i++) {
 			if(date.getTime() === this.customDates[i].getTime()) {
 				this.customDates.splice(i, 1);
@@ -300,7 +299,6 @@ export class DataComponent implements OnInit {
 					type: this.type
 				}
 				this.dataService.addData(data).subscribe(res => {
-					console.log(res);
 					this.allData.push(res);
 					this.allData.sort((a, b) => {
 						let da = new Date(a.year, a.month, a.date);
@@ -336,7 +334,6 @@ export class DataComponent implements OnInit {
 					day: result.date.getDay(),
 				}
 				this.dataService.editData(data, this.displayedData[index]._id).subscribe(res => {
-					console.log(res);
 					for(let i = 0; i < this.allData.length; i++) {
 						if(this.allData[i]._id === this.displayedData[index]._id) {
 							this.allData[i] = res;
@@ -365,7 +362,6 @@ export class DataComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(result => {
 			if(result) {
 				this.dataService.deleteData(this.displayedData[index]._id).subscribe(res => {
-					console.log(res);
 					for(let i = 0; i < this.allData.length; i++) {
 						if(this.allData[i]._id === this.displayedData[index]._id) {
 							index = i;
@@ -514,5 +510,53 @@ export class DataComponent implements OnInit {
 			default: period = '';
 		}
 		return period;
+	}
+
+	getMailContent(): string {
+		let content = `<!DOCTYPE html>
+						<html>
+							<head>
+								<style>
+									table, th, td {
+										border: 2px solid black;
+										border-collapse: collapse;
+								  	}
+								</style>
+							</head>
+							<body>`;
+		content += `<div style="text-align: center; font-weight: bold; margin: 15px; font-size: 20px;">
+						Your ${this.title}s ${this.getPeriodString()}
+					</div>`;
+		content += `<table width="100%"> <tr>`;
+		for(let i = 0; i < 5; i++)
+			content += `<th style="text-align: center;">${this.displayedColumns[i]}</th>`;
+		content += `<th style="text-align: center;">Day</th>`;
+		content += `</tr>`;
+		// Total width: 610
+		for(let i = 0; i < this.filteredData.length; i++) {
+			content += `<tr>
+							<td width="5%" style="text-align: center;">${i + 1}</td>
+							<td width="23%">${this.filteredData[i].name}</td>
+							<td width="12%">${this.filteredData[i].amount}</td>
+							<td width="20%">${this.filteredData[i].category}</td>
+							<td width="26%">${this.filteredData[i].date} - ${monthNames[this.filteredData[i].month]} - ${this.filteredData[i].year}</td>
+							<td width="14%">${dayNames[this.filteredData[i].day]}</td>
+						</tr>`
+		}
+		content += `</table></body></html>`;
+		return content;
+	}
+
+	sendMail(): void {
+		this.mailService.sendMail(`Your ${this.title}s`, this.getMailContent()).subscribe(res => {
+			this.dialog.open(ConfirmBoxComponent, {
+				data: {
+					message: 'Data sent to the registered mail id',
+					type: 'success',
+					icon: 'done',
+					okBtn: true
+				}
+			})
+		})
 	}
 }
