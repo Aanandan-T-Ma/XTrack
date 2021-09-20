@@ -20,4 +20,22 @@ export class PasswordService {
 		})
 		.pipe(catchError(this.processHttpMessage.handleError));
 	}
+
+	forgotPassword(email: string): Observable<AuthResponse> {
+		return this.http.post<any>(`${baseURL}/password/forgot`, { email: email })
+		.pipe(catchError(this.processHttpMessage.handleError));
+	}
+
+	resetPassword(url: string, password: string): Observable<AuthResponse> {
+		return this.http.post<any>(`${baseURL}/password/reset`, {
+			url: url,
+			password: password
+		})
+		.pipe(catchError(this.processHttpMessage.handleError));
+	}
+
+	checkUrl(url: string): Observable<AuthResponse> {
+		return this.http.post<any>(`${baseURL}/password/checkUrl`, { url: url })
+		.pipe(catchError(this.processHttpMessage.handleError));
+	}
 }

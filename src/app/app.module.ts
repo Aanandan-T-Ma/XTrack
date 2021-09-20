@@ -9,12 +9,14 @@ import { SharedModule } from './shared/shared.module';
 import { ActivationComponent } from './activation/activation.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PasswordComponent } from './password/password.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		LoginComponent,
-  		ActivationComponent
+  		ActivationComponent,
+    	PasswordComponent
 	],
 	imports: [
 		BrowserModule,

@@ -18,11 +18,16 @@
                             <mat-form-field class="form-field">
                                 <input matInput placeholder="Password" formControlName="password" autocomplete="off"
                                     [type]="showPassword[0] ? 'text' : 'password'">
+                                <mat-icon matSuffix class="form-icon" (click)="togglePassword(0)">
+                                    {{ showPassword[0] ? 'visibility' : 'visibility_off' }}
+                                </mat-icon>
                                 <mat-error *ngIf="loginForm.get('password')?.invalid">Password is required</mat-error>
                             </mat-form-field>
-                            <mat-checkbox class="form-field" [checked]="showPassword[0]" (change)="togglePassword(0)" color="primary">
-                                Show Password
-                            </mat-checkbox>
+                            <div class="form-field forgot-password">
+                                <a (click)="router.navigate(['/forgotPassword/forgot'])">
+                                    <i>Forgot Password?</i>
+                                </a>
+                            </div>
                             <button mat-raised-button class="actn-btn" color="primary" type="submit" [disabled]="!loginForm.valid">
                                 Login
                             </button>

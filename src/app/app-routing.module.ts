@@ -5,6 +5,7 @@ import { ActivationComponent } from './activation/activation.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginGuard } from './guards/login.guard';
 import { LoginComponent } from './login/login.component';
+import { PasswordComponent } from './password/password.component';
 
 const routes: Routes = [
 	{
@@ -19,7 +20,13 @@ const routes: Routes = [
 	},
 	{
 		path: 'activateAccount/:url',
-		component: ActivationComponent
+		component: ActivationComponent,
+		canActivate: [LoginGuard]
+	},
+	{
+		path: 'forgotPassword/:url',
+		component: PasswordComponent,
+		canActivate: [LoginGuard]
 	},
 	{
 		path: '**',

@@ -72,6 +72,16 @@
             cursor: pointer;
         }
     }
+
+    .forgot-password {
+        font-size: 0.8rem;
+        cursor: pointer;
+        color: blue;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 .img-container {

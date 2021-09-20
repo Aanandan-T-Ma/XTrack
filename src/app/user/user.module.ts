@@ -21,8 +21,8 @@ import { PasswordChangeComponent } from './password-change/password-change.compo
 		IncomeComponent,
 		ExpenditureComponent,
   		DataComponent,
-    DataModalComponent,
-    PasswordChangeComponent
+		DataModalComponent,
+		PasswordChangeComponent
 	],
 	imports: [
 		CommonModule,

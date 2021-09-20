@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 	loginErrorMsg: string = '';
 	registerErrorMsg: string = '';
 
-	constructor(private authService: AuthService, private dialog: MatDialog, private router: Router) { }
+	constructor(private authService: AuthService, private dialog: MatDialog, public router: Router) { }
 
 	ngOnInit(): void {
 		this.loginForm = new FormGroup({
