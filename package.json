@@ -1,12 +1,13 @@
 {
-  "name": "frontend-web",
+  "name": "xtrack",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "postinstall": "ng build --aot --prod"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~12.0.0",
     "@angular/router": "~12.0.0",
     "chart.js": "^3.5.1",
+    "express": "^4.17.1",
     "html-to-pdfmake": "^2.3.4",
     "pdfmake": "^0.2.2",
     "rxjs": "~6.6.0",
@@ -40,5 +42,9 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "typescript": "~4.2.3"
+  },
+  "engines": {
+    "node": "~12.14.1",
+    "npm": "~7.6.3"
   }
 }
