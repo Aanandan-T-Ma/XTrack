@@ -163,7 +163,8 @@ export class DashboardComponent implements OnInit {
 							display: true,
 							text: 'Amount',
 							color: 'white'
-						}
+						},
+						min: 0
 					}
 				},
 				interaction: {

@@ -16,18 +16,16 @@ export class ActivationComponent implements OnInit {
 	constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
 	ngOnInit(): void {
-		setTimeout(() => {
-			this.activatedRoute.params.subscribe(params => {
-				let url = params['url'];
-				this.authService.activateAccount(url).subscribe(res => {
-					this.loading = false;
-					if(res.success) 
-						this.activated = true;
-					else
-						this.invalid = true;
-				});
-			})
-		}, 4000)
+		this.activatedRoute.params.subscribe(params => {
+			let url = params['url'];
+			this.authService.activateAccount(url).subscribe(res => {
+				this.loading = false;
+				if(res.success) 
+					this.activated = true;
+				else
+					this.invalid = true;
+			});
+		})
 	}
 
 }

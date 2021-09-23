@@ -70,4 +70,9 @@ export class AuthService {
 		this.username = undefined;
 		localStorage.removeItem(this.usernameKey);
 	}
+
+	deleteAccount(): Observable<AuthResponse> {
+		return this.http.delete<any>(baseURL + '/users/delete')
+		.pipe(catchError(this.processHTTPMsgService.handleError));
+	}
 }

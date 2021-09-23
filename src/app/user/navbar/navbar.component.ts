@@ -62,4 +62,37 @@ export class NavbarComponent implements OnInit {
 		})
 	}
 
+	deleteAccount(): void {
+		const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+			data: {
+				message: 'Are you sure you want to delete your account?',
+				submessage: 'This action is irreversible',
+				type: 'confirm',
+				icon: 'error',
+				confirmBtn: true,
+				cancelBtn: true
+			}
+		});
+		dialogRef.afterClosed().subscribe(result => {
+			if(result) {
+				this.authService.deleteAccount().subscribe(res => {
+					if(res.success) {
+						this.authService.logout();
+						this.router.navigate(['/login']);
+					}
+					else {
+						this.dialog.open(ConfirmBoxComponent, {
+							data: {
+								message: 'Some error occured',
+								type: 'confirm',
+								icon: 'error',
+								okBtn: true
+							}
+						})
+					}
+				})
+			}
+		})
+	}
+
 }

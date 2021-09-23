@@ -353,7 +353,7 @@ export class DataComponent implements OnInit {
 			data: {
 				message: `Delete ${this.title}`,
 				submessage: `Are you sure you want to delete this?`,
-				type: 'info',
+				type: 'confirm',
 				icon: 'error',
 				confirmBtn: true,
 				cancelBtn: true
@@ -379,7 +379,7 @@ export class DataComponent implements OnInit {
 		this.dialog.open(ConfirmBoxComponent, {
 			data: {
 				message: `There is no data to be saved`,
-				type: 'info',
+				type: 'confirm',
 				icon: 'error',
 				okBtn: true
 			}

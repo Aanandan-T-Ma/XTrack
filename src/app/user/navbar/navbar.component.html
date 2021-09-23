@@ -12,6 +12,10 @@
                         <mat-icon>lock</mat-icon>
                         <span>Change Password</span>
                     </button>
+                    <button mat-menu-item (click)="deleteAccount()">
+                        <mat-icon>person_remove</mat-icon>
+                        <span>Delete Account</span>
+                    </button>
                 </mat-menu>
             </div>
         </mat-toolbar>
@@ -50,7 +54,6 @@
             <button class="menu-btn" mat-icon-button (click)="sidenav.toggle()" *ngIf="isHandset | async">
                 <mat-icon aria-label="Side Nav toggle icon">menu</mat-icon>
             </button>
-            <!-- <div class="nav-header" *ngIf="pageTitle">{{ pageTitle[0].toUpperCase() + pageTitle.substring(1) }}</div> -->
             <div class="nav-header" *ngIf="pageTitle">XTrack {{ pageTitle === 'dashboard' ? ' - Dashboard' : '' }}</div>
         </mat-toolbar>
         <router-outlet></router-outlet>

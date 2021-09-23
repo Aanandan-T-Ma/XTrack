@@ -12,7 +12,6 @@
     justify-content: center;
     margin: 20px auto;
     padding: 20px;
-    background-color: white;
 }
 
 .header {
@@ -149,17 +148,20 @@
 }
 
 .footer-btns {
+    margin-top: 20px;
+
     button {
         margin-left: 10px;
+        color: white;
     }
 
     .btn {
-        background-color: hsl(264, 60%, 58%);
+        background-color: hsl(264, 60%, 48%);
         transition-duration: 0.5s;
 
         &:hover {
             color: white;
-            background-color: hsl(264, 60%, 38%);
+            background-color: hsl(264, 60%, 28%);
             box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
         }
     }
