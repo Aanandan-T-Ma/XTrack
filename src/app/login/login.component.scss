@@ -105,6 +105,11 @@
     }
 }
 
+.spinner {
+    display: inline-block;
+    margin-left: 5px;
+}
+
 @media only screen and (max-width: 1050px) {
     .main {
         width: 75%;

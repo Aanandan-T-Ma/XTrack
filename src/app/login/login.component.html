@@ -30,6 +30,7 @@
                             </div>
                             <button mat-raised-button class="actn-btn" color="primary" type="submit" [disabled]="!loginForm.valid">
                                 Login
+                                <mat-spinner *ngIf="loginLoading" mode="indeterminate" diameter="15" color="accent" class="spinner"></mat-spinner>
                             </button>
                             <div class="login-msg" *ngIf="loginErrorMsg">
                                 {{ loginErrorMsg }}
@@ -75,6 +76,7 @@
                             </mat-form-field>
                             <button mat-raised-button class="actn-btn" color="primary" type="submit" [disabled]="!registerForm.valid">
                                 Register
+                                <mat-spinner *ngIf="registerLoading" mode="indeterminate" diameter="15" color="accent" class="spinner"></mat-spinner>
                             </button>
                             <div class="login-msg" *ngIf="registerErrorMsg">
                                 {{ registerErrorMsg }}

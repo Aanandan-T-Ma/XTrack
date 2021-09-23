@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
 	showPassword: boolean[] = [false, false, false];
 	loginErrorMsg: string = '';
 	registerErrorMsg: string = '';
+	loginLoading: boolean = false;
+	registerLoading: boolean = false;
 
 	constructor(private authService: AuthService, private dialog: MatDialog, public router: Router) { }
 
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	login(): void {
+		this.loginLoading = true;
 		this.authService.login(this.loginForm.value).subscribe(res => {
 			if(res.success) {
 				this.authService.setUserCredentials(res.token, this.loginForm.value.username);
@@ -43,13 +46,15 @@ export class LoginComponent implements OnInit {
 			else {
 				this.loginErrorMsg = res.message;
 			}
+			this.loginLoading = false;
 		});
 	}
 
 	register(): void {
-		console.log(this.registerForm.value);
+		this.registerLoading = true;
 		if(this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
 			this.registerErrorMsg = 'Passwords do not match';
+			this.registerLoading = false;
 			return;
 		}
 		this.authService.register(this.registerForm.value).subscribe(res => {
@@ -71,6 +76,7 @@ export class LoginComponent implements OnInit {
 			else {
 				this.registerErrorMsg = res.message;
 			}
+			this.registerLoading = false;
 		});
 	}
 
