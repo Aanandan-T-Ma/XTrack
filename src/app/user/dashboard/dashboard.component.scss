@@ -87,6 +87,10 @@
         width: 75%;
         margin: auto;
     }
+
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+        background-color: black;
+    }
 }
 
 .year {
@@ -197,10 +201,6 @@
 ::ng-deep .tooltip {
     white-space: pre-line;
     background-color: rgba(0, 0, 0, 0.8);
-}
-
-::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: black;
 }
 
 @media only screen and (max-width: 1200px) {
