@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
 			}
 			else {
 				this.loginErrorMsg = res.message;
+				this.loginLoading = false;
 			}
-			this.loginLoading = false;
 		});
 	}
 
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
 						icon: 'done',
 						okBtn: true
 					},
-					maxWidth: '70%',
+					maxWidth: '70%'
 				});
 				dialogRef.afterClosed().subscribe(res => {
 					window.location.reload();
