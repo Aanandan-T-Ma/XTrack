@@ -552,6 +552,7 @@ export class DataComponent implements OnInit {
 			this.dialog.open(ConfirmBoxComponent, {
 				data: {
 					message: 'Data sent to the registered mail id',
+					submessage: 'Check the spam folder if it\'s not in inbox',
 					type: 'success',
 					icon: 'done',
 					okBtn: true
