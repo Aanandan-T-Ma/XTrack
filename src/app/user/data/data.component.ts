@@ -520,6 +520,7 @@ export class DataComponent implements OnInit {
 									table, th, td {
 										border: 2px solid black;
 										border-collapse: collapse;
+										padding: 5px;
 								  	}
 								</style>
 							</head>
@@ -527,7 +528,7 @@ export class DataComponent implements OnInit {
 		content += `<div style="text-align: center; font-weight: bold; margin: 15px; font-size: 20px;">
 						Your ${this.title}s ${this.getPeriodString()}
 					</div>`;
-		content += `<table width="100%"> <tr>`;
+		content += `<table width="100%"> <tr style="background-color: #4588f5;">`;
 		for(let i = 0; i < 5; i++)
 			content += `<th style="text-align: center;">${this.displayedColumns[i]}</th>`;
 		content += `<th style="text-align: center;">Day</th>`;
