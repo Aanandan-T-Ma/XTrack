@@ -4,6 +4,7 @@
 
     .sidenav {
         min-width: 200px;
+        max-width: 250px;
     }
 }
 
@@ -33,8 +34,11 @@
 .toolbar-title {
     width: 100%;
     line-height: 40px;
+    display: flex;
+    justify-content: space-between;
 
-    .btn {
-        float: right;
+    .username {
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

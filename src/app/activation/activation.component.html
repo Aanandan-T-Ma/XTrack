@@ -11,5 +11,9 @@
             <div class="error"><mat-icon class="icon">error</mat-icon></div>
             <div class="text">Oops! The page you're looking for doesn't exist🙁</div>
         </div>
+        <button mat-flat-button class="goto-btn" *ngIf="!loading" (click)="gotoLogin()">
+            <mat-icon>login</mat-icon>
+            Back To Login
+        </button>
     </main>
 </div>

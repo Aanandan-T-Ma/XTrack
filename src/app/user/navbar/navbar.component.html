@@ -3,7 +3,7 @@
             [mode]="(isHandset | async) ? 'over' : 'side'" [opened]="!(isHandset | async)">
         <mat-toolbar class="toolbar">
             <div class="toolbar-title">
-                {{ username }}
+                <div class="username" [title]="username">{{ username }}</div>
                 <button mat-icon-button class="btn" [matMenuTriggerFor]="menu" aria-label="Password change">
                     <mat-icon>more_vert</mat-icon>
                 </button>

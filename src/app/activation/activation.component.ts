@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class ActivationComponent implements OnInit {
 	activated = false;
 	invalid = false;
 
-	constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) { }
+	constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
 	ngOnInit(): void {
 		this.activatedRoute.params.subscribe(params => {
@@ -24,8 +24,14 @@ export class ActivationComponent implements OnInit {
 					this.activated = true;
 				else
 					this.invalid = true;
+				this.activated = true;
+				this.invalid = false;
 			});
 		})
+	}
+
+	gotoLogin(): void {
+		this.router.navigate(['/login']);
 	}
 
 }

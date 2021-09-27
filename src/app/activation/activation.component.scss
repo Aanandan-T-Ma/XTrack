@@ -10,6 +10,14 @@
 .main {
     border-radius: 5px;
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .goto-btn {
+        margin-top: 10px;
+        background-color: white;
+    }
 }
 
 .activated, .invalid {
