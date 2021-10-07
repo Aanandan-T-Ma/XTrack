@@ -206,4 +206,14 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
+	getColor(cell: any): string {
+		if(cell === ' ') return 'rgba(0, 0, 0, 0.5)';
+		// if(cell == this.today.getDate()) return 'rgba(255, 255, 255, 0.7)';
+		if(this.monthData[0][cell - 1] + this.monthData[1][cell - 1] > 0) {
+			let green = (this.monthData[1][cell - 1] / (this.monthData[0][cell - 1] + this.monthData[1][cell - 1])) * 100;
+			return `linear-gradient(135deg, hsl(120, 75%, 40%) 0% ${green}%, red ${green}% 100%)`;
+		}
+		return '';
+	}
+
 }

@@ -32,7 +32,8 @@
                 </div>
                 <div class="row" *ngFor="let row of monthMatrix">
                     <div class="cell" *ngFor="let cell of row" matTooltipClass="tooltip" matTooltipPosition="above"
-                        [ngClass]="cell === ' ' ? 'no-day' : (cell == today.getDate() ? 'today' : 'day')"
+                        [ngClass]="cell === ' ' ? '' : (cell == today.getDate() ? 'today' : 'day')"
+                        [style.background]="getColor(cell)"
                         [matTooltip]="'Income: ' + monthData[1][cell - 1] + '\nExpense: ' + monthData[0][cell - 1]" 
                         [matTooltipDisabled]="cell === ' ' || cell > today.getDate()">
                         {{ cell }}
