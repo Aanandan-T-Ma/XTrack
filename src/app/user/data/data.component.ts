@@ -160,7 +160,12 @@ export class DataComponent implements OnInit {
 	}
 
 	addCustomDate(date: Date): void {
-		this.customDates.push(date);
+		let datePresent = false;
+		for(let i = 0; i < this.customDates.length && !datePresent; i++)
+			if(date.getTime() === this.customDates[i].getTime())
+				datePresent = true;
+		if(!datePresent)
+			this.customDates.push(date);
 		this.changePeriod(5);
 	}
 
