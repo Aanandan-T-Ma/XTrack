@@ -24,7 +24,19 @@
                 <div class="title">Monthly Data</div>
             </div>
             <div class="calendar" *ngIf="!loading">
-                <div class="header">{{ monthNames[today.getMonth()] + ' ' + today.getFullYear() }}</div>
+                <div class="header">
+                    <div class="sign" (click)="changeMonth(false)">
+                        <span class="material-icons">
+                            arrow_back_ios
+                        </span>
+                    </div>
+                    <div>{{ monthNames[month.getMonth()] + ' ' + month.getFullYear() }}</div>
+                    <div class="sign" (click)="changeMonth(true)">
+                        <span class="material-icons">
+                            arrow_forward_ios
+                        </span>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="cell day-name" *ngFor="let d of dayNames">
                         {{ d[0] }}
@@ -32,10 +44,12 @@
                 </div>
                 <div class="row" *ngFor="let row of monthMatrix">
                     <div class="cell" *ngFor="let cell of row" matTooltipClass="tooltip" matTooltipPosition="above"
-                        [ngClass]="cell === ' ' ? '' : (cell == today.getDate() ? 'today' : 'day')"
+                        [ngClass]="cell === ' ' ? '' : (month.getFullYear() == today.getFullYear() && 
+                                month.getMonth() == today.getMonth() && cell == today.getDate() ? 'today' : 'day')"
                         [style.background]="getColor(cell)"
                         [matTooltip]="'Income: ' + monthData[1][cell - 1] + '\nExpense: ' + monthData[0][cell - 1]" 
-                        [matTooltipDisabled]="cell === ' ' || cell > today.getDate()">
+                        [matTooltipDisabled]="cell === ' ' || (month.getFullYear() == today.getFullYear() && 
+                                month.getMonth() == today.getMonth() && cell > today.getDate())">
                         {{ cell }}
                     </div>
                 </div>
@@ -48,7 +62,17 @@
         </div>
         <div class="year">
             <div class="year-header" *ngIf="!loading">
-                <div class="title">Yearly Data</div>
+                <div class="sign" (click)="changeYear(false)">
+                    <span class="material-icons">
+                        arrow_back_ios
+                    </span>
+                </div>
+                <div class="title"> Yearly Data for {{ year.getFullYear() }} </div>
+                <div class="sign" (click)="changeYear(true)">
+                    <span class="material-icons">
+                        arrow_forward_ios
+                    </span>
+                </div>
             </div>
             <canvas id="year-chart"></canvas>
         </div>

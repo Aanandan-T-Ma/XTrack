@@ -97,12 +97,39 @@
     width: 88%;
 
     &-header {
+        display: flex;
+        justify-content: center;
+        padding-top: 10px;
+        color: white;
+        $size: 20px;
+
         .title {
-            color: white;
-            font-size: 20px;
             font-weight: 500;
-            padding-top: 10px;
             text-align: center;
+            font-size: $size;
+        }
+
+        .sign {
+            text-align: center;
+            cursor: pointer;
+
+            span {
+                line-height: $size;
+                font-size: $size;
+                transition-duration: .5s;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+
+                &:first-child {
+                    margin-right: 10px;
+                }
+
+                &:last-child {
+                    margin-left: 10px;
+                }
+            }
         }
     }
 }
@@ -118,6 +145,14 @@
         $size: 2.5rem;
         $border-width: 0.0625rem;
 
+        // disbale text selection
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
         .row {
             display: flex;
 
@@ -128,13 +163,6 @@
                 text-align: center;
                 line-height: $size;
                 background-color: rgba(255, 255, 255, 0.1);
-                // disbale text selection
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                -khtml-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
             }
 
             .cell:first-child {
@@ -170,7 +198,6 @@
         }
 
         .header {
-            text-align: center;
             width: $size * 7 + $border-width * 12;
             height: $size;
             border: $border-width * 2 solid white;
@@ -178,6 +205,23 @@
             line-height: $size;
             font-size: 16px;
             background-color: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-around;
+
+            .sign {
+                text-align: center;
+                cursor: pointer;
+
+                span {
+                    line-height: $size;
+                    vertical-align: middle;
+                    transition-duration: .5s;
+
+                    &:hover {
+                        transform: scale(1.2);
+                    }
+                }
+            }
         }
     }
 
@@ -224,6 +268,13 @@
                 width: $size * 7 + $border-width * 12;
                 height: $size;
                 line-height: $size;
+
+                .sign {
+                    span {
+                        line-height: $size;
+                        vertical-align: middle;
+                    }
+                }
             }
         }
     }

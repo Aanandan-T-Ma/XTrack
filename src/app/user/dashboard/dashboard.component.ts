@@ -29,6 +29,9 @@ export class DashboardComponent implements OnInit {
 	totalMonthData: number[] = [0, 0];
 	loading: boolean = true;
 
+	month: Date = new Date()
+	year: Date = new Date()
+
 	constructor(private dataService: DataService) { }
 
 	ngOnInit(): void {
@@ -182,10 +185,10 @@ export class DashboardComponent implements OnInit {
 	}
 
     getMonthStructure(): any[][] {
-        const day = new Date(this.today.getFullYear(), this.today.getMonth(), 1).getDay();
+        const day = new Date(this.month.getFullYear(), this.month.getMonth(), 1).getDay();
         let matrix: any[] = [], week: any[] = [];
         for(let i = 0; i < day; i++) week.push(' ');
-        var curDate = 1, lastDate = new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0).getDate();
+        var curDate = 1, lastDate = new Date(this.month.getFullYear(), this.month.getMonth() + 1, 0).getDate();
         while(curDate <= lastDate){
             week.push(curDate++);
             if(week.length === 7){
@@ -214,6 +217,50 @@ export class DashboardComponent implements OnInit {
 			return `linear-gradient(135deg, hsl(120, 75%, 40%) 0% ${green}%, red ${green}% 100%)`;
 		}
 		return '';
+	}
+
+	changeMonth(nextMonth: Boolean) {
+		if(nextMonth) this.month.setMonth(this.month.getMonth() + 1);
+		else this.month.setMonth(this.month.getMonth() - 1);
+		for(let i = 0; i < 2; i++)
+			for(let j = 0; j < 31; j++)
+				this.monthData[i][j] = 0;
+		let firstDay = new Date(this.month.getFullYear(), this.month.getMonth(), 1);
+		let lastDay = new Date(this.month.getFullYear(), this.month.getMonth() + 1, 0);
+		this.incomes.forEach(d => {
+			let date = new Date(d.year, d.month, d.date);
+			if(date >= firstDay && date <= lastDay)
+				this.monthData[1][d.date - 1] += d.amount;
+		})
+		this.expenses.forEach(d => {
+			let date = new Date(d.year, d.month, d.date);
+			if(date >= firstDay && date <= lastDay)
+				this.monthData[0][d.date - 1] += d.amount;
+		})
+		this.monthMatrix = this.getMonthStructure();
+		this.calculateMonthData();
+	}
+
+	changeYear(nextYear: Boolean) {
+		if(nextYear) this.year.setFullYear(this.year.getFullYear() + 1);
+		else this.year.setFullYear(this.year.getFullYear() - 1);
+		for(let i = 0; i < 2; i++)
+			for(let j = 0; j < 12; j++)
+				this.yearData[i][j] = 0;
+		let firstDay = new Date(this.year.getFullYear(), 0, 1);
+		let lastDay = new Date(this.year.getFullYear(), 11, 31);
+		this.incomes.forEach(d => {
+			let date = new Date(d.year, d.month, d.date);
+			if(date >= firstDay && date <= lastDay)
+				this.yearData[1][d.month] += d.amount;
+		})
+		this.expenses.forEach(d => {
+			let date = new Date(d.year, d.month, d.date);
+			if(date >= firstDay && date <= lastDay)
+				this.yearData[0][d.month] += d.amount;
+		})
+		this.yearChart.destroy();
+		this.createYearChart();
 	}
 
 }
