@@ -1,0 +1,25 @@
+.categories {
+    width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: rgb(90, 90, 90);
+        letter-spacing: 1px;
+        margin: 20px auto;
+    }
+}
+
+.total {
+    font-size: 1rem;
+}
+
+@media only screen and (max-width: 650px) {
+    .categories {
+        width: 100%;
+    }
+}

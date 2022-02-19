@@ -11,6 +11,7 @@ import { UserComponent } from './user.component';
 import { DataComponent } from './data/data.component';
 import { DataModalComponent } from './data/data-modal/data-modal.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { PasswordChangeComponent } from './password-change/password-change.compo
 		ExpenditureComponent,
   		DataComponent,
 		DataModalComponent,
-		PasswordChangeComponent
+		PasswordChangeComponent,
+  AnalyticsComponent
 	],
 	imports: [
 		CommonModule,
