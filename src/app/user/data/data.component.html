@@ -232,6 +232,13 @@
                 <mat-icon>email</mat-icon>
                 Send to Mail
             </button>
+            <button mat-flat-button (click)="copyDataToClipboard()" [disabled]="displayedData.length === 0 || copied"
+                [ngClass]="displayedData.length > 0 ? 'btn' : ''">
+                <span class="material-icons" [style.color]="copied ? '#3fff00' : 'white'">
+                    {{ copied ? 'check_circle' : 'content_copy'}}
+                </span>
+                {{ copied ? 'Copied!' : 'Copy Data'}}
+            </button>
         </div>
     </main>
     

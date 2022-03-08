@@ -151,10 +151,13 @@
 
 .footer-btns {
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
 
     button {
         margin-left: 10px;
         color: white;
+        margin-top: 10px;
     }
 
     .btn {

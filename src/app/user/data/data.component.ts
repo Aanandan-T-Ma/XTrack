@@ -12,6 +12,7 @@ import { DataModalComponent } from './data-modal/data-modal.component';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { MailService } from 'src/app/services/mail.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -45,6 +46,7 @@ export class DataComponent implements OnInit {
 	filteredData: Data[];
 	periodData: Data[];
 	showFilters: boolean = false;
+	copied: boolean = false;
 
 	@ViewChild('paginator') paginator: MatPaginator;
 	@Input() allData: Data[];
@@ -58,7 +60,8 @@ export class DataComponent implements OnInit {
 	customDates: Date[] = [];
 	today: Date = new Date();
 
-	constructor(private dialog: MatDialog, private dataService: DataService, private mailService: MailService) { }
+	constructor(private dialog: MatDialog, private dataService: DataService, private mailService: MailService,
+				private clipboard: Clipboard) { }
 
 	ngOnInit(): void {
 		this.filterForm = new FormGroup({
@@ -565,5 +568,14 @@ export class DataComponent implements OnInit {
 				}
 			})
 		})
+	}
+
+	copyDataToClipboard(): void {
+		this.copied = true;
+		setTimeout(() => this.copied = false, 2000);
+		let content = this.filteredData.reduce((val, data) => {
+			return `${val}${data.name} [${data.category}] - ₹${data.amount}, ${data.date}/${data.month + 1}/${data.year}\n`;
+		}, '');
+		this.clipboard.copy(content);
 	}
 }
