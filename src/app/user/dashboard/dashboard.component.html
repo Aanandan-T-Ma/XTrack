@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container {{ theme }}">
     <main class="main">
         <div class="week">
             <div class="week-header" *ngIf="!loading">
                 <div class="title">Weekly Data</div>
                 <mat-form-field class="type-select">
                     <mat-label class="select-label">Type</mat-label>
-                    <mat-select [value]="0" (selectionChange)="changeType($event.value)">
+                    <mat-select [value]="0" (selectionChange)="changeType($event.value)" class="value-select {{ theme }}">
                         <mat-option [value]="0">
                             Expense
                         </mat-option>
@@ -56,8 +56,8 @@
             </div>
             <div class="month-footer" *ngIf="!loading">
                 <div class="total">Total</div>
-                <div class="income">Income: {{ totalMonthData[1] }}</div>
-                <div class="expense">Expense: {{ totalMonthData[0] }}</div>
+                <div class="income">Income: ₹{{ totalMonthData[1].toFixed(2) }}</div>
+                <div class="expense">Expense: ₹{{ totalMonthData[0].toFixed(2) }}</div>
             </div>
         </div>
         <div class="year">

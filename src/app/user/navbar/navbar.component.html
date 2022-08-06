@@ -1,13 +1,13 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav class="sidenav" [attr.role]="(isHandset | async) ? 'dialog' : 'navigation'"
+    <mat-sidenav #sidenav class="sidenav {{ theme }}" [attr.role]="(isHandset | async) ? 'dialog' : 'navigation'"
             [mode]="(isHandset | async) ? 'over' : 'side'" [opened]="!(isHandset | async)">
-        <mat-toolbar class="toolbar">
+        <mat-toolbar class="toolbar {{ theme }}">
             <div class="toolbar-title">
                 <div class="username" [title]="username">{{ username }}</div>
                 <button mat-icon-button class="btn" [matMenuTriggerFor]="menu" aria-label="Password change">
                     <mat-icon>more_vert</mat-icon>
                 </button>
-                <mat-menu #menu="matMenu">
+                <mat-menu #menu="matMenu" class="nav-menu {{ theme }}">
                     <button mat-menu-item (click)="openPasswordModal()">
                         <mat-icon>lock</mat-icon>
                         <span>Change Password</span>
@@ -20,28 +20,31 @@
             </div>
         </mat-toolbar>
         <mat-nav-list class="nav-list">
-            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link' : '')"
+            <div class="mode-toggler">
+                <mat-slide-toggle (toggleChange)="toggleTheme()">{{ theme }} Mode</mat-slide-toggle>
+            </div>
+            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link ' : ' ') + theme"
                 (click)="goToUrl('/user/dashboard',sidenav)">
                 <span class="item-icon">
                     <mat-icon>dashboard</mat-icon>
                 </span>
                 <span class="item-name">Dashboard</span>
             </a>
-            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'income' ? 'active-link' : '')"
+            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'income' ? 'active-link ' : ' ') + theme"
                 (click)="goToUrl('/user/income',sidenav)">
                 <span class="item-icon">
                     <mat-icon>attach_money</mat-icon>
                 </span>
                 <span class="item-name">Income</span>
             </a>
-            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'expenditure' ? 'active-link' : '')"
+            <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'expenditure' ? 'active-link ' : ' ') + theme"
                 (click)="goToUrl('/user/expenditure',sidenav)">
                 <span class="item-icon">
                     <mat-icon>credit_card</mat-icon>
                 </span>
                 <span class="item-name">Expenditure</span>
             </a>
-            <a mat-list-item class="logout" (click)="logout()">
+            <a mat-list-item class="logout {{ theme }}" (click)="logout()">
                 <span class="item-icon">
                     <mat-icon>exit_to_app</mat-icon>
                 </span>

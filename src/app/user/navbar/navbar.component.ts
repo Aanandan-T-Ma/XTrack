@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordChangeComponent } from '../password-change/password-change.component';
 import { ConfirmBoxComponent } from 'src/app/shared/confirm-box/confirm-box.component';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
 	selector: 'app-navbar',
@@ -20,13 +21,16 @@ export class NavbarComponent implements OnInit {
 										.pipe(map(result => result.matches), shareReplay());
 	pageTitle: string;
 	username: string | undefined | null;
+	theme: string;
 
 	constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService,
-				private dialog: MatDialog) { 
+				private dialog: MatDialog, private themeService: ThemeService) { 
 		this.router.events.subscribe(() => {
 			let url = this.router.url;
 			this.pageTitle = url.substring(url.lastIndexOf('/') + 1);
 		})
+		this.theme = this.themeService.theme;
+		this.themeService.themeChange.subscribe(mode => this.theme = mode);
 	}
 
 	ngOnInit(): void {
@@ -93,6 +97,10 @@ export class NavbarComponent implements OnInit {
 				})
 			}
 		})
+	}
+
+	toggleTheme(): void {
+		this.themeService.changeTheme(this.theme === 'Light' ? 'Dark' : 'Light');
 	}
 
 }

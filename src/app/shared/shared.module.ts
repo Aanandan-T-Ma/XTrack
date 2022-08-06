@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { LoadingComponent } from './loading/loading.component';
@@ -52,7 +53,8 @@ const modules = [
 	MatAutocompleteModule,
 	MatTooltipModule,
 	MatMenuModule,
-	MatProgressSpinnerModule
+	MatProgressSpinnerModule,
+	MatSlideToggleModule
 ]
 
 @NgModule({

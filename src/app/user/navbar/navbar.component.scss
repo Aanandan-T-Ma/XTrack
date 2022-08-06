@@ -1,3 +1,7 @@
+.Dark {
+    color: white;
+}
+
 .sidenav-container {
     height: 100vh;
     //background-color: hsl(236, 100%, 77%);
@@ -5,6 +9,9 @@
     .sidenav {
         min-width: 200px;
         max-width: 250px;
+        &.Dark {
+            background-color: #191919;
+        }
     }
 }
 
@@ -12,10 +19,17 @@
     .item-icon {
         margin-right: 10px;
     }
+    &.Dark:hover {
+        background-color: rgba(255, 255, 255, 0.04);
+    }
 }
 
 .active-link {
     background-color: rgba(0, 0, 0, 0.04);
+
+    &.Dark {
+        background-color: rgba(255, 255, 255, 0.04);
+    }
 }
 
 .logout {
@@ -31,6 +45,10 @@
     }
 }
 
+.toolbar.Dark {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .toolbar-title {
     width: 100%;
     line-height: 40px;
@@ -40,5 +58,36 @@
     .username {
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+}
+
+.mode-toggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px auto 10px;
+}
+
+::ng-deep {
+    .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+        background: #000000;
+        border: 1px solid white;
+    }
+    
+    .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+        background: #444444;
+        border: 1px solid white;
+    }
+
+    .nav-menu.Dark {
+        background-color: rgb(41, 41, 41);
+        
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .mat-icon, button {
+            color: white;
+        }
     }
 }

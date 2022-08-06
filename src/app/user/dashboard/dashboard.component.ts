@@ -4,6 +4,7 @@ import { Data } from 'src/app/shared/models';
 import { Chart, PieController, ArcElement, Tooltip, Title, Legend, LineController, CategoryScale, 
 		LinearScale, PointElement, LineElement } from 'chart.js';
 import { dayNames, monthNames } from 'src/app/shared/names';
+import { ThemeService } from 'src/app/services/theme.service';
 
 Chart.register(PieController, ArcElement, Tooltip, Title, Legend, LineController, CategoryScale, 
 		LinearScale, PointElement, LineElement);
@@ -29,10 +30,14 @@ export class DashboardComponent implements OnInit {
 	totalMonthData: number[] = [0, 0];
 	loading: boolean = true;
 
-	month: Date = new Date()
-	year: Date = new Date()
+	month: Date = new Date();
+	year: Date = new Date();
+	theme: string;
 
-	constructor(private dataService: DataService) { }
+	constructor(private dataService: DataService, private themeService: ThemeService) {
+		this.theme = this.themeService.theme;
+		this.themeService.themeChange.subscribe(mode => this.theme = mode);
+	}
 
 	ngOnInit(): void {
 		for(let i = 0; i < 2; i++) {
@@ -164,7 +169,7 @@ export class DashboardComponent implements OnInit {
 						},
 						title: {
 							display: true,
-							text: 'Amount',
+							text: 'Amount (₹)',
 							color: 'white'
 						},
 						min: 0
