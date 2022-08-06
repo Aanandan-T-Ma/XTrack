@@ -574,7 +574,7 @@ export class DataComponent implements OnInit {
 		this.copied = true;
 		setTimeout(() => this.copied = false, 2000);
 		let content = this.filteredData.reduce((val, data) => {
-			return `${val}${data.name} [${data.category}] - ₹${data.amount}, ${data.date}/${data.month + 1}/${data.year}\n`;
+			return `${val}${data.name} - ₹${data.amount}, ${data.date}/${data.month + 1}/${data.year}\n`;
 		}, '');
 		this.clipboard.copy(content);
 	}
