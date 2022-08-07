@@ -21,7 +21,9 @@
         </mat-toolbar>
         <mat-nav-list class="nav-list">
             <div class="mode-toggler">
-                <mat-slide-toggle (toggleChange)="toggleTheme()">{{ theme }} Mode</mat-slide-toggle>
+                <mat-slide-toggle (toggleChange)="toggleTheme()" [checked]="theme === 'Dark'">
+                    {{ theme }} Mode {{ theme === 'Dark' ? '(beta)' : '' }}
+                </mat-slide-toggle>
             </div>
             <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link ' : ' ') + theme"
                 (click)="goToUrl('/user/dashboard',sidenav)">

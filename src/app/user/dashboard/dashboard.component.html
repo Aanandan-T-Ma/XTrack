@@ -5,7 +5,7 @@
                 <div class="title">Weekly Data</div>
                 <mat-form-field class="type-select">
                     <mat-label class="select-label">Type</mat-label>
-                    <mat-select [value]="0" (selectionChange)="changeType($event.value)" class="value-select {{ theme }}">
+                    <mat-select [value]="0" (selectionChange)="changeType($event.value)" [panelClass]="theme">
                         <mat-option [value]="0">
                             Expense
                         </mat-option>

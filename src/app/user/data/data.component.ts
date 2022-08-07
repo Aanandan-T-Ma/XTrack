@@ -13,6 +13,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { MailService } from 'src/app/services/mail.service';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { ThemeService } from 'src/app/services/theme.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -47,6 +48,7 @@ export class DataComponent implements OnInit {
 	periodData: Data[];
 	showFilters: boolean = false;
 	copied: boolean = false;
+	theme: string;
 
 	@ViewChild('paginator') paginator: MatPaginator;
 	@Input() allData: Data[];
@@ -61,7 +63,10 @@ export class DataComponent implements OnInit {
 	today: Date = new Date();
 
 	constructor(private dialog: MatDialog, private dataService: DataService, private mailService: MailService,
-				private clipboard: Clipboard) { }
+				private clipboard: Clipboard, private themeService: ThemeService) {
+		this.theme = this.themeService.theme;
+		this.themeService.themeChange.subscribe(theme => this.theme = theme);
+	}
 
 	ngOnInit(): void {
 		this.filterForm = new FormGroup({

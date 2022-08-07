@@ -1,3 +1,5 @@
+@use '../../shared/variables.scss' as variables;
+
 .container {
     width: 100%;
     display: flex;
@@ -5,7 +7,7 @@
     overflow: hidden;
 
     &.Dark {
-        background: #292929;
+        background: variables.$container-bg;
     }
 }
 
@@ -294,14 +296,20 @@
     }
 }
 
-::ng-deep .mat-select-panel {
-    background-color: rgb(41, 41, 41);
-    
-    .mat-option {
-        color: white;
+::ng-deep .Dark {
+    &.mat-select-panel {
+        background-color: variables.$select-menu-bg;
         
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.04);
+        .mat-option {
+            color: white;
+            
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.04);
+            }
         }
+    }
+    
+    &.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+        color: variables.$selected-bg;
     }
 }

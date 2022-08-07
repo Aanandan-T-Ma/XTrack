@@ -1,3 +1,5 @@
+@use '../../shared/variables.scss' as variables;
+
 .container {
     width: 100%;
     display: flex;
@@ -5,6 +7,15 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+
+    &.Dark {
+        background: variables.$container-bg;
+
+        main {
+            background-color: variables.$main-bg;
+            color: white;
+        }
+    }
 }
 
 .main {
@@ -31,7 +42,15 @@
 
             &:hover {
                 background-color: hsl(262, 93%, 38%);
-                box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
+                box-shadow: 0 0 10px 1px hsl(0, 0%, 30%);
+            }
+        }
+
+        &.Dark {
+            button {
+                &:hover {
+                    box-shadow: 0 0 10px 1px hsl(0, 0%, 55%);
+                }
             }
         }
     }
@@ -49,7 +68,15 @@
             padding: 0.2em 0.5em;
 
             &:hover {
-                box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
+                box-shadow: 0 0 10px 1px hsl(0, 0%, 30%);
+            }
+        }
+
+        &.Dark {
+            button {
+                &:hover {
+                    box-shadow: 0 0 10px 1px hsl(0, 0%, 55%);
+                }
             }
         }
     }
@@ -59,6 +86,10 @@
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     margin-bottom: 20px;
+
+    &.Dark {
+        border-color: white;
+    }
 }
 
 .filter-form {
@@ -89,7 +120,15 @@
             transition-duration: 0.5s;
             
             &:hover {
-                box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
+                box-shadow: 0 0 10px 1px hsl(0, 0%, 30%);
+            }
+        }
+
+        &.Dark {
+            button {
+                &:hover {
+                    box-shadow: 0 0 10px 1px hsl(0, 0%, 55%);
+                }
             }
         }
     }
@@ -167,8 +206,65 @@
         &:hover {
             color: white;
             background-color: hsl(264, 60%, 28%);
-            box-shadow: 0 3px 10px 1px hsl(0, 0%, 55%);
+            box-shadow: 0 0 10px 1px hsl(0, 0%, 30%);
         }
+    }
+
+    &.Dark {
+        .btn {
+            &:hover {
+                box-shadow: 0 0 10px 1px hsl(0, 0%, 55%);
+            }
+        }
+    }
+}
+
+.form-field.Dark,
+.select-container.Dark {
+    .label {
+        color: white;
+    }
+
+    ::ng-deep {
+        .mat-select-arrow {
+            color: white;
+        }
+        .mat-select-value {
+            color: white;
+        }
+        .mat-form-field-underline {
+            background-color: white;
+            height: 1px;
+        }
+        .mat-form-field-appearance-fill .mat-form-field-flex,
+        .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
+            background-color: variables.$select-bg;
+        }
+    }
+
+    ::placeholder,
+    :-ms-input-placeholder /* Internet Explorer 10-11 */,
+    ::-ms-input-placeholder { /* Microsoft Edge */
+        color: white;
+        opacity: 1;
+    }
+}
+
+::ng-deep .Dark {
+    &.mat-select-panel {
+        background-color: variables.$select-menu-bg;
+        
+        .mat-option {
+            color: white;
+            
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.04);
+            }
+        }
+    }
+    
+    &.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+        color: variables.$selected-bg;
     }
 }
 

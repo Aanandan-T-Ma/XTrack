@@ -1,18 +1,18 @@
-<div class="container">
+<div class="container {{ theme }}">
     <main class="main mat-elevation-z8">
         <header class="header">
             <h1 class="title">{{ title }}</h1>
-            <div class="add-btn-container">
+            <div class="add-btn-container {{ theme }}">
                 <button mat-raised-button class="add-btn" (click)="openAddModal()">
                     <mat-icon>add</mat-icon> New
                 </button>
             </div>
         </header>
         <div class="controls">
-            <div class="select-container">
-                <mat-form-field class="form-field" appearance="fill">
-                    <mat-label>Period</mat-label>
-                    <mat-select [value]="selectedPeriod.value" (selectionChange)="changePeriod($event.value)">
+            <div class="select-container {{ theme }}">
+                <mat-form-field class="form-field {{ theme }}" appearance="fill">
+                    <mat-label class="label">Period</mat-label>
+                    <mat-select [value]="selectedPeriod.value" (selectionChange)="changePeriod($event.value)" [panelClass]="theme">
                         <mat-option *ngFor="let p of periods" [value]="p.value">
                             {{ p.label }}
                         </mat-option>
@@ -20,8 +20,8 @@
                 </mat-form-field>
             </div>
             <div class="calendar-container" *ngIf="selectedPeriod.value === 4">
-                <mat-form-field appearance="fill">
-                    <mat-label>Enter a date range</mat-label>
+                <mat-form-field appearance="fill" class="form-field {{ theme }}">
+                    <mat-label class="label">Enter a date range</mat-label>
                     <mat-date-range-input [rangePicker]="rangePicker">
                       <input matStartDate placeholder="Start date" (dateInput)="rangeSelected(true, $event.value)" [max]="today">
                       <input matEndDate placeholder="End date" (dateInput)="rangeSelected(false, $event.value)" [max]="today">
@@ -30,19 +30,19 @@
                     <mat-date-range-picker #rangePicker color="primary"></mat-date-range-picker>
                 </mat-form-field>
             </div>
-            <div class="btn-container">
+            <div class="btn-container {{ theme }}">
                 <button mat-raised-button color="primary" (click)="showFilters = !showFilters">
                     <mat-icon>filter_alt_outline</mat-icon>
                     <span class="btn-text">Filter</span>
                 </button>
             </div>
         </div>
-        <div class="filter-container" *ngIf="showFilters">
+        <div class="filter-container {{ theme }}" *ngIf="showFilters">
             <form [formGroup]="filterForm" (ngSubmit)="applyFilters()" class="filter-form">
                 <div class="date-form">
-                    <mat-form-field class="form-field date">
-                        <mat-label>Date</mat-label>
-                        <mat-select formControlName="date">
+                    <mat-form-field class="form-field {{ theme }} date">
+                        <mat-label class="label">Date</mat-label>
+                        <mat-select formControlName="date" [panelClass]="theme">
                             <mat-option [value]="''">Any</mat-option>
                             <mat-option *ngFor="let d of dates" [value]="d">
                                 {{ d }}
@@ -50,9 +50,9 @@
                         </mat-select>
                     </mat-form-field>
         
-                    <mat-form-field class="form-field month">
-                        <mat-label>Month</mat-label>
-                        <mat-select formControlName="month">
+                    <mat-form-field class="form-field {{ theme }} month">
+                        <mat-label class="label">Month</mat-label>
+                        <mat-select formControlName="month" [panelClass]="theme">
                             <mat-option [value]="''">Any</mat-option>
                             <mat-option *ngFor="let m of months" [value]="m">
                                 {{ monthNames[m] }}
@@ -60,7 +60,7 @@
                         </mat-select>
                     </mat-form-field>
         
-                    <mat-form-field class="form-field year">
+                    <mat-form-field class="form-field {{ theme }} year">
                         <input matInput type="number" placeholder="Year" autocomplete="off" formControlName="year">
                         <mat-error *ngIf="filterForm.get('year')?.invalid">
                             Invalid Year
@@ -68,9 +68,9 @@
                     </mat-form-field>
                 </div>
 
-                <mat-form-field class="form-field day">
-                    <mat-label>Day</mat-label>
-                    <mat-select formControlName="day">
+                <mat-form-field class="form-field {{ theme }} day">
+                    <mat-label class="label">Day</mat-label>
+                    <mat-select formControlName="day" [panelClass]="theme">
                         <mat-option [value]="''">Any</mat-option>
                         <mat-option *ngFor="let d of days" [value]="d">
                             {{ dayNames[d] }}
@@ -78,27 +78,27 @@
                     </mat-select>
                 </mat-form-field>
     
-                <mat-form-field class="form-field">
-                    <mat-label>Category</mat-label>
-                    <mat-select formControlName="category">
+                <mat-form-field class="form-field {{ theme }}">
+                    <mat-label class="label">Category</mat-label>
+                    <mat-select formControlName="category" [panelClass]="theme">
                         <mat-option *ngFor="let c of categories" [value]="c">
                             {{ c }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
     
-                <mat-form-field class="form-field">
+                <mat-form-field class="form-field {{ theme }}">
                     <input matInput [placeholder]="displayedColumns[1]" autocomplete="off" formControlName="name">
                 </mat-form-field>
     
                 <div class="amount-form">
-                    <mat-form-field class="form-field">
+                    <mat-form-field class="form-field {{ theme }}">
                         <input matInput type="number" placeholder="Min Amount" autocomplete="off" formControlName="minAmount">
                         <mat-error *ngIf="filterForm.get('minAmount')?.invalid">
                             Invalid Amount
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="form-field">
+                    <mat-form-field class="form-field {{ theme }}">
                         <input matInput type="number" placeholder="Max Amount" autocomplete="off" formControlName="maxAmount">
                         <mat-error *ngIf="filterForm.get('maxAmount')?.invalid">
                             Invalid amount
@@ -106,7 +106,7 @@
                     </mat-form-field>
                 </div>
     
-                <div class="apply-btn-container">
+                <div class="apply-btn-container {{ theme }}">
                     <button mat-flat-button color="primary" [disabled]="!filterForm.valid">Apply</button>
                     <button mat-flat-button color="accent" (click)="clearFilters()">Clear Filters</button>
                 </div>
@@ -221,7 +221,7 @@
         <mat-paginator #paginator [length]="filteredData.length" [pageSizeOptions]="pageSizes" showFirstLastButtons
                 (page)="changePage($event)" [pageSize]="pageSize" [pageIndex]="pageIndex">
         </mat-paginator>
-        <div class="footer-btns">
+        <div class="footer-btns {{ theme }}">
             <button mat-flat-button (click)="generatePdf()" [disabled]="displayedData.length === 0"
                 [ngClass]="displayedData.length > 0 ? 'btn' : ''">
                 <mat-icon>print</mat-icon>

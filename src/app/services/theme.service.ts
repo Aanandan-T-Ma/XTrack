@@ -6,16 +6,18 @@ import { Subject } from 'rxjs';
 })
 export class ThemeService {
 
-	theme = 'Light';
+	theme: string;
 	themeChange: Subject<string> = new Subject<string>();
 
 	constructor() {
-		this.themeChange.subscribe(mode => {
-			this.theme = mode;
-		});
+		let theme = localStorage.getItem('theme');
+		this.theme = theme || 'Light';
+		if(!theme) localStorage.setItem('theme', this.theme);
+		this.themeChange.subscribe(mode => this.theme = mode);
 	}
 
-	changeTheme(mode: string) {
+	changeTheme(mode: string): void {
 		this.themeChange.next(mode);
+		localStorage.setItem('theme', mode);
 	}
 }
