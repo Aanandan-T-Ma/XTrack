@@ -88,7 +88,7 @@
                 </mat-form-field>
     
                 <mat-form-field class="form-field {{ theme }}">
-                    <input matInput [placeholder]="displayedColumns[1]" autocomplete="off" formControlName="name">
+                    <input matInput [placeholder]="displayedColumns[2]" autocomplete="off" formControlName="name">
                 </mat-form-field>
     
                 <div class="amount-form">
@@ -132,14 +132,25 @@
         </div>
         <div class="table-container">
             <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="selected">
+                    <th mat-header-cell *matHeaderCellDef class="data-col"> 
+                        <div class="th-cell">
+                            <mat-checkbox [checked]="allSelected()" [indeterminate]="someSelected()" [disabled]="noneSelected()"
+                                color="primary" (change)="updateCheck($event.checked, -1)"></mat-checkbox>
+                        </div>
+                    </th>
+                    <td mat-cell *matCellDef="let i = index">
+                        <mat-checkbox [checked]="selected[i]" color="primary" (change)="updateCheck($event.checked, i)"></mat-checkbox>
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="S.No">
                     <th mat-header-cell *matHeaderCellDef> S.No </th>
                     <td mat-cell *matCellDef="let i = index"> {{ i + 1 + pageIndex * pageSize }} </td>
                 </ng-container>
-                <ng-container [matColumnDef]="displayedColumns[1]">
+                <ng-container [matColumnDef]="displayedColumns[2]">
                     <th mat-header-cell *matHeaderCellDef class="data-col">
                         <div class="th-cell" (click)="sortData('name')">
-                            <div> {{ displayedColumns[1] }} </div>
+                            <div> {{ displayedColumns[2] }} </div>
                             <div *ngIf="sorted[0] === 'name'">
                                 <mat-icon *ngIf="sorted[1] === 1">arrow_drop_up</mat-icon>
                                 <mat-icon *ngIf="sorted[1] === 2">arrow_drop_down</mat-icon>
@@ -214,7 +225,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
                 <tr *matNoDataRow>
-                    <td class="no-data-cell" colspan="6"> --- No Results --- </td>
+                    <td class="no-data-cell" colspan="8"> --- No Results --- </td>
                 </tr>
             </table>
         </div>
@@ -222,18 +233,18 @@
                 (page)="changePage($event)" [pageSize]="pageSize" [pageIndex]="pageIndex">
         </mat-paginator>
         <div class="footer-btns {{ theme }}">
-            <button mat-flat-button (click)="generatePdf()" [disabled]="displayedData.length === 0"
-                [ngClass]="displayedData.length > 0 ? 'btn' : ''">
+            <button mat-flat-button (click)="generatePdf()" [disabled]="noneSelected()"
+                [ngClass]="!noneSelected() ? 'btn' : ''">
                 <mat-icon>print</mat-icon>
                 Print
             </button>
-            <button mat-flat-button (click)="sendMail()" [disabled]="displayedData.length === 0"
-                [ngClass]="displayedData.length > 0 ? 'btn' : ''">
+            <button mat-flat-button (click)="sendMail()" [disabled]="noneSelected()"
+                [ngClass]="!noneSelected() ? 'btn' : ''">
                 <mat-icon>email</mat-icon>
                 Send to Mail
             </button>
-            <button mat-flat-button (click)="copyDataToClipboard()" [disabled]="displayedData.length === 0 || copied"
-                [ngClass]="displayedData.length > 0 ? 'btn' : ''">
+            <button mat-flat-button (click)="copyDataToClipboard()" [disabled]="noneSelected() || copied"
+                [ngClass]="!noneSelected() ? 'btn' : ''">
                 <span class="material-icons" [style.color]="copied ? '#3fff00' : 'white'">
                     {{ copied ? 'check_circle' : 'content_copy'}}
                 </span>

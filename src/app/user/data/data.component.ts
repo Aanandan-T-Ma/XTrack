@@ -61,6 +61,7 @@ export class DataComponent implements OnInit {
 	rangeDates: any[] = [null, null];
 	customDates: Date[] = [];
 	today: Date = new Date();
+	selected: boolean[];
 
 	constructor(private dialog: MatDialog, private dataService: DataService, private mailService: MailService,
 				private clipboard: Clipboard, private themeService: ThemeService) {
@@ -219,6 +220,7 @@ export class DataComponent implements OnInit {
 				return false;
 			return true;
 		});
+		this.selected = Array(this.filteredData.length).fill(true);
 		this.pageIndex = 0;
 		this.displayedData = this.filteredData.slice(0, this.pageSize);
 		this.generateDataSource();
@@ -391,7 +393,7 @@ export class DataComponent implements OnInit {
 	showWarning(): void {
 		this.dialog.open(ConfirmBoxComponent, {
 			data: {
-				message: `There is no data to be saved`,
+				message: `There is no data`,
 				type: 'confirm',
 				icon: 'error',
 				okBtn: true
@@ -400,12 +402,13 @@ export class DataComponent implements OnInit {
 	}
 
 	generatePdf(): void {
-		if(this.filteredData.length === 0) {
+		let selectedData = this.filteredData.filter((data, i) => this.selected[i]);
+		if(selectedData.length === 0) {
 			this.showWarning();
 			return;
 		}
         const htmlToPdfmake = require('html-to-pdfmake');
-        const content = this.getPdfContent();
+        const content = this.getPdfContent(selectedData);
         const val: any = htmlToPdfmake(content, {
             tableAutoSize: true,
         });
@@ -455,7 +458,7 @@ export class DataComponent implements OnInit {
         pdfMake.createPdf(dd).open();
     }
 
-	getPdfContent(): string {
+	getPdfContent(data: Data[]): string {
 		let content = ``;
 		content += `<div style="text-align: center;">
 						<img src="${logoImageUrl}" />
@@ -464,19 +467,19 @@ export class DataComponent implements OnInit {
 						Your ${this.title}s ${this.getPeriodString()}
 					</div>`;
 		content += `<table> <tr>`;
-		for(let i = 0; i < 5; i++)
+		for(let i = 1; i < 6; i++)
 			content += `<th style="text-align: center;">${this.displayedColumns[i]}</th>`;
 		content += `<th style="text-align: center;">Day</th>`;
 		content += `</tr>`;
 		// Total width: 610
-		for(let i = 0; i < this.filteredData.length; i++) {
+		for(let i = 0; i < data.length; i++) {
 			content += `<tr>
 							<td width="35" style="text-align: center;">${i + 1}</td>
-							<td width="140">${this.filteredData[i].name}</td>
-							<td width="70">${this.filteredData[i].amount}</td>
-							<td width="120">${this.filteredData[i].category}</td>
-							<td width="160">${this.filteredData[i].date} - ${monthNames[this.filteredData[i].month]} - ${this.filteredData[i].year}</td>
-							<td width="85">${dayNames[this.filteredData[i].day]}</td>
+							<td width="140">${data[i].name}</td>
+							<td width="70">${data[i].amount}</td>
+							<td width="120">${data[i].category}</td>
+							<td width="160">${data[i].date} - ${monthNames[data[i].month]} - ${data[i].year}</td>
+							<td width="85">${dayNames[data[i].day]}</td>
 						</tr>`
 		}
 		content += `</table>`;
@@ -525,7 +528,7 @@ export class DataComponent implements OnInit {
 		return period;
 	}
 
-	getMailContent(): string {
+	getMailContent(data: Data[]): string {
 		let content = `<!DOCTYPE html>
 						<html>
 							<head>
@@ -542,19 +545,19 @@ export class DataComponent implements OnInit {
 						Your ${this.title}s ${this.getPeriodString()}
 					</div>`;
 		content += `<table width="100%"> <tr style="background-color: #4588f5;">`;
-		for(let i = 0; i < 5; i++)
+		for(let i = 1; i < 6; i++)
 			content += `<th style="text-align: center;">${this.displayedColumns[i]}</th>`;
 		content += `<th style="text-align: center;">Day</th>`;
 		content += `</tr>`;
 		// Total width: 610
-		for(let i = 0; i < this.filteredData.length; i++) {
+		for(let i = 0; i < data.length; i++) {
 			content += `<tr>
 							<td width="5%" style="text-align: center;">${i + 1}</td>
-							<td width="23%">${this.filteredData[i].name}</td>
-							<td width="12%">${this.filteredData[i].amount}</td>
-							<td width="20%">${this.filteredData[i].category}</td>
-							<td width="26%">${this.filteredData[i].date} - ${monthNames[this.filteredData[i].month]} - ${this.filteredData[i].year}</td>
-							<td width="14%">${dayNames[this.filteredData[i].day]}</td>
+							<td width="23%">${data[i].name}</td>
+							<td width="12%">${data[i].amount}</td>
+							<td width="20%">${data[i].category}</td>
+							<td width="26%">${data[i].date} - ${monthNames[data[i].month]} - ${data[i].year}</td>
+							<td width="14%">${dayNames[data[i].day]}</td>
 						</tr>`
 		}
 		content += `</table></body></html>`;
@@ -562,7 +565,12 @@ export class DataComponent implements OnInit {
 	}
 
 	sendMail(): void {
-		this.mailService.sendMail(`Your ${this.title}s`, this.getMailContent()).subscribe(res => {
+		let selectedData = this.filteredData.filter((data, i) => this.selected[i]);
+		if(selectedData.length === 0) {
+			this.showWarning();
+			return;
+		}
+		this.mailService.sendMail(`Your ${this.title}s`, this.getMailContent(selectedData)).subscribe(res => {
 			this.dialog.open(ConfirmBoxComponent, {
 				data: {
 					message: 'Data sent to the registered mail id',
@@ -576,11 +584,34 @@ export class DataComponent implements OnInit {
 	}
 
 	copyDataToClipboard(): void {
+		let selectedData = this.filteredData.filter((data, i) => this.selected[i]);
+		if(selectedData.length === 0) {
+			this.showWarning();
+			return;
+		}
 		this.copied = true;
 		setTimeout(() => this.copied = false, 2000);
-		let content = this.filteredData.reduce((val, data) => {
+		let content = selectedData.reduce((val, data) => {
 			return `${val}${data.name} - ₹${data.amount}, ${data.date}/${data.month + 1}/${data.year}\n`;
 		}, '');
 		this.clipboard.copy(content);
+	}
+
+	updateCheck(checked: boolean, index: number) {
+		if(index >= 0) this.selected[index] = checked;
+		else this.selected = this.selected.fill(checked);
+		console.log(this.selected);
+	}
+	
+	allSelected(): boolean {
+		return this.selected.length > 0 && this.selected.every(x => x);
+	}
+
+	someSelected(): boolean {
+		return this.selected.some(x => x) && !this.allSelected();
+	}
+
+	noneSelected(): boolean {
+		return this.selected.length === 0 || this.selected.every(x => !x);
 	}
 }

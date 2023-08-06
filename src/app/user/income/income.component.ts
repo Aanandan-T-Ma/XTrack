@@ -10,7 +10,7 @@ import { Data } from 'src/app/shared/models';
 export class IncomeComponent implements OnInit {
 
 	allIncomes: Data[];
-	displayedColumns = ['S.No', 'Source', 'Amount', 'Category', 'Date', 'Day', 'controls'];
+	displayedColumns = ['selected', 'S.No', 'Source', 'Amount', 'Category', 'Date', 'Day', 'controls'];
 	type: string = 'income';
 	loading: boolean = true;
 

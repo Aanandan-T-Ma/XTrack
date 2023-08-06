@@ -10,7 +10,7 @@ import { Data } from 'src/app/shared/models';
 export class ExpenditureComponent implements OnInit {
 
 	allExpenses: Data[];
-	displayedColumns = ['S.No', 'Spent On', 'Amount', 'Category', 'Date', 'Day', 'controls'];
+	displayedColumns = ['selected', 'S.No', 'Spent On', 'Amount', 'Category', 'Date', 'Day', 'controls'];
 	type: string = 'expense';
 	loading: boolean = true;
 
