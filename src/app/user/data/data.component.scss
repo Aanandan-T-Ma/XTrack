@@ -33,25 +33,40 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
 
-    .add-btn-container {
-        button {
-            background-color: hsl(262, 93%, 48%);
-            color: white;
-            padding: 1px 7px 1px 5px;
+.add-btn-container {
+    button, .file-upload {
+        background-color: hsl(262, 93%, 48%);
+        color: white;
+        padding: 1px 7px 1px 5px;
 
+        &:hover {
+            background-color: hsl(262, 93%, 38%);
+            box-shadow: 0 0 10px 1px hsl(0, 0%, 30%);
+        }
+    }
+
+    &.Dark {
+        button, .file-upload {
             &:hover {
-                background-color: hsl(262, 93%, 38%);
-                box-shadow: 0 0 10px 1px hsl(0, 0%, 30%);
+                box-shadow: 0 0 10px 1px hsl(0, 0%, 55%);
             }
         }
+    }
 
-        &.Dark {
-            button {
-                &:hover {
-                    box-shadow: 0 0 10px 1px hsl(0, 0%, 55%);
-                }
-            }
+    .file-upload {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition-duration: .5s;
+        margin-left: 10px;
+
+        .mat-icon {
+            margin-right: 5px;
         }
     }
 }
@@ -193,6 +208,12 @@
     }
 }
 
+.selection-info {
+    margin: 20px 10px 0;
+    font-style: italic;
+    font-weight: lighter;
+}
+
 .footer-btns {
     margin-top: 20px;
     display: flex;
@@ -212,6 +233,14 @@
             color: white;
             background-color: hsl(264, 60%, 28%);
             box-shadow: 0 0 10px 1px hsl(0, 0%, 30%);
+        }
+
+        &.red {
+            background-color: hsl(4, 90%, 58%);
+
+            &:hover {
+                background-color: hsl(4, 90%, 38%);
+            }
         }
     }
 

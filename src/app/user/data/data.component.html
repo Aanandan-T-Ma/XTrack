@@ -1,7 +1,7 @@
 <div class="container {{ theme }}">
     <main class="main mat-elevation-z8">
         <header class="header">
-            <h1 class="title">{{ title }}</h1>
+            <h1 class="title">{{ title }}s</h1>
             <div class="add-btn-container {{ theme }}">
                 <button mat-raised-button class="add-btn" (click)="openAddModal()">
                     <mat-icon>add</mat-icon> New
@@ -135,12 +135,12 @@
                 <ng-container matColumnDef="selected">
                     <th mat-header-cell *matHeaderCellDef class="data-col"> 
                         <div class="th-cell">
-                            <mat-checkbox [checked]="allSelected()" [indeterminate]="someSelected()" [disabled]="noneSelected()"
+                            <mat-checkbox [checked]="allSelected()" [indeterminate]="someSelected()" [disabled]="noData()"
                                 color="primary" (change)="updateCheck($event.checked, -1)"></mat-checkbox>
                         </div>
                     </th>
                     <td mat-cell *matCellDef="let i = index">
-                        <mat-checkbox [checked]="selected[i]" color="primary" (change)="updateCheck($event.checked, i)"></mat-checkbox>
+                        <mat-checkbox [checked]="selected[i + pageIndex * pageSize]" color="primary" (change)="updateCheck($event.checked, i + pageIndex * pageSize)"></mat-checkbox>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="S.No">
@@ -232,6 +232,9 @@
         <mat-paginator #paginator [length]="filteredData.length" [pageSizeOptions]="pageSizes" showFirstLastButtons
                 (page)="changePage($event)" [pageSize]="pageSize" [pageIndex]="pageIndex">
         </mat-paginator>
+        <div class="selection-info">
+            {{ selectedCount }} items selected
+        </div>
         <div class="footer-btns {{ theme }}">
             <button mat-flat-button (click)="generatePdf()" [disabled]="noneSelected()"
                 [ngClass]="!noneSelected() ? 'btn' : ''">
@@ -250,6 +253,18 @@
                 </span>
                 {{ copied ? 'Copied!' : 'Copy Data'}}
             </button>
+            <button mat-flat-button (click)="deleteSelected()" [disabled]="noneSelected()"
+                [ngClass]="!noneSelected() ? 'btn red' : ''">
+                <mat-icon>delete</mat-icon>
+                Delete Selected
+            </button>
+        </div>
+        <div class="footer-btns add-btn-container {{ theme }}">
+            <input type="file" id="excel-upload" #excelUpload (change)="importFromExcel()" hidden>
+            <label for="excel-upload" class="file-upload">
+                <mat-icon>cloud_upload</mat-icon>
+                Import from excel
+            </label>
         </div>
     </main>
     

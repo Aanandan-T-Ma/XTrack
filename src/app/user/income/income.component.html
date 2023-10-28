@@ -1,5 +1,6 @@
 <div *ngIf="!loading">
-    <app-data [allData]="allIncomes" [title]="'Income'" [displayedColumns]="displayedColumns" [type]="type"></app-data>
+    <app-data [allData]="allIncomes" [title]="'Income'" [displayedColumns]="displayedColumns" [type]="type"
+        (onLoad)="toggleLoader($event)"></app-data>
 </div>
 <div class="loading-main" *ngIf="loading"></div>
 <app-screen-loader *ngIf="loading"></app-screen-loader>

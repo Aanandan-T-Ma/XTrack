@@ -1,14 +1,14 @@
 <!-- 
     message: Any string
     submessage: Any string
-    type -> success, confirm
+    type -> success, confirm, info
     icon -> tick: done
             !: error
     okBtn: boolean
     confirmBtn: boolean
     cancelBtn: boolean
  -->
-<div class="box-container">
+<div class="box-container {{ theme }}">
     <div class="icon-div">
         <mat-icon [ngClass]="'icon ' + config.type">
             {{ config.icon }}

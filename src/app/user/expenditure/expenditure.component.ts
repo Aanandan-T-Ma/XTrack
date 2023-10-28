@@ -28,4 +28,9 @@ export class ExpenditureComponent implements OnInit {
 		})
 	}
 
+	toggleLoader(val: boolean): void {
+		console.log(val);
+		this.loading = val;
+	}
+
 }

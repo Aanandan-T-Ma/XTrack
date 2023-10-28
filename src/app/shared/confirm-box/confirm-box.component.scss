@@ -1,3 +1,11 @@
+@use '../../shared/variables.scss' as variables;
+
+.mat-dialog-container {
+    &.Dark {
+        background-color: variables.$sidenav-bg;
+    }
+}
+
 .box-container {
     display: flex;
     flex-direction: column;
@@ -22,6 +30,10 @@
 
     .confirm {
         color: red;
+    }
+    
+    .info {
+        color: yellow;
     }
 }
 

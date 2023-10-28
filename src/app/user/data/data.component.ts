@@ -1,18 +1,20 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { DataService } from 'src/app/services/data.service';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Clipboard } from '@angular/cdk/clipboard';
+import readXlsxFile from 'read-excel-file';
+
 import { ConfirmBoxComponent } from 'src/app/shared/confirm-box/confirm-box.component';
 import { Data } from 'src/app/shared/models';
 import { dayNames, logoImageUrl, monthNames } from 'src/app/shared/names';
 import { DataModalComponent } from './data-modal/data-modal.component';
 
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DataService } from 'src/app/services/data.service';
 import { MailService } from 'src/app/services/mail.service';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { ThemeService } from 'src/app/services/theme.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -62,6 +64,10 @@ export class DataComponent implements OnInit {
 	customDates: Date[] = [];
 	today: Date = new Date();
 	selected: boolean[];
+	selectedCount: Number;
+
+	@ViewChild('excelUpload') excelInput: ElementRef;
+	@Output() onLoad = new EventEmitter<boolean>();
 
 	constructor(private dialog: MatDialog, private dataService: DataService, private mailService: MailService,
 				private clipboard: Clipboard, private themeService: ThemeService) {
@@ -221,6 +227,7 @@ export class DataComponent implements OnInit {
 			return true;
 		});
 		this.selected = Array(this.filteredData.length).fill(true);
+		this.selectedCount = this.filteredData.length;
 		this.pageIndex = 0;
 		this.displayedData = this.filteredData.slice(0, this.pageSize);
 		this.generateDataSource();
@@ -323,7 +330,7 @@ export class DataComponent implements OnInit {
 					this.changePeriod(this.selectedPeriod.value);
 					if(!this.categories.includes(result.category))
 						this.categories.push(result.category);
-				})
+				});
 			}
 		})
 	}
@@ -377,23 +384,18 @@ export class DataComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(result => {
 			if(result) {
 				this.dataService.deleteData(this.displayedData[index]._id).subscribe(res => {
-					for(let i = 0; i < this.allData.length; i++) {
-						if(this.allData[i]._id === this.displayedData[index]._id) {
-							index = i;
-							break;
-						}
-					}
-					this.allData.splice(index, 1);
+					index = this.allData.findIndex(d => d._id === this.displayedData[index]._id);
+					if (index > -1) this.allData.splice(index, 1);
 					this.changePeriod(this.selectedPeriod.value);
-				})
+				});
 			}
- 		})
+ 		});
 	}
 
 	showWarning(): void {
 		this.dialog.open(ConfirmBoxComponent, {
 			data: {
-				message: `There is no data`,
+				message: `No data selected`,
 				type: 'confirm',
 				icon: 'error',
 				okBtn: true
@@ -600,7 +602,8 @@ export class DataComponent implements OnInit {
 	updateCheck(checked: boolean, index: number) {
 		if(index >= 0) this.selected[index] = checked;
 		else this.selected = this.selected.fill(checked);
-		console.log(this.selected);
+
+		this.selectedCount = this.selected.filter(check => check).length;
 	}
 	
 	allSelected(): boolean {
@@ -613,5 +616,109 @@ export class DataComponent implements OnInit {
 
 	noneSelected(): boolean {
 		return this.selected.length === 0 || this.selected.every(x => !x);
+	}
+
+	noData(): boolean {
+		return this.displayedData.length === 0;
+	}
+
+	importFromExcel(): void {
+		let file = this.excelInput.nativeElement.files[0];
+		this.excelInput.nativeElement.value = null;
+		const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+			data: {
+				message: `Import ${this.title}s`,
+				submessage: `Are you sure you want to save the ${this.title}s from ${file.name}?`,
+				type: 'info',
+				icon: 'error',
+				confirmBtn: true,
+				cancelBtn: true
+			}
+		});
+		dialogRef.afterClosed().subscribe(confirmed => {
+			if(confirmed) {
+				readXlsxFile(file).then(fileData => {
+					let added = 0;
+					fileData.forEach(row => {
+						let date = new Date(row[3].toString());
+						let data = {
+							name: row[0].toString(),
+							amount: Number(row[1].toString()),
+							category: row[2].toString(),
+							date: date.getDate(),
+							month: date.getMonth(),
+							year: date.getFullYear(),
+							type: this.type
+						}
+						this.dataService.addData(data).subscribe(res => {
+							this.allData.push(res);
+							this.allData.sort((a, b) => {
+								let da = new Date(a.year, a.month, a.date);
+								let db = new Date(b.year, b.month, b.date);
+								return db.getTime() - da.getTime();
+							});
+							this.changePeriod(this.selectedPeriod.value);
+							if(!this.categories.includes(data.category))
+								this.categories.push(data.category);
+
+							added++;
+							if(added === fileData.length) {
+								this.dialog.open(ConfirmBoxComponent, {
+									data: {
+										message: `${this.title}s added successfully`,
+										type: 'success',
+										icon: 'done',
+										okBtn: true
+									}
+								});
+							}
+						});
+					});
+				});
+			}
+ 		});
+	}
+
+	deleteSelected(): void {
+		let selectedData = this.filteredData.filter((data, i) => this.selected[i]);
+		if(selectedData.length === 0) {
+			this.showWarning();
+			return;
+		}
+		
+		const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+			data: {
+				message: `Delete Selected ${this.title}s?`,
+				submessage: `Note: This action is irreversible`,
+				type: 'confirm',
+				icon: 'error',
+				confirmBtn: true,
+				cancelBtn: true
+			}
+		});
+		dialogRef.afterClosed().subscribe(confirmed => {
+			if(confirmed) {
+				let deleted = 0;
+				selectedData.forEach(data => {
+					this.dataService.deleteData(data._id).subscribe(res => {
+						let index = this.allData.findIndex(d => d._id === data._id);
+						if (index > -1) this.allData.splice(index, 1);
+						this.changePeriod(this.selectedPeriod.value);
+
+						deleted++;
+						if(deleted === selectedData.length) {
+							this.dialog.open(ConfirmBoxComponent, {
+								data: {
+									message: `${this.title}s deleted successfully`,
+									type: 'success',
+									icon: 'done',
+									okBtn: true
+								}
+							});
+						}
+					});
+				});
+			}
+ 		});
 	}
 }

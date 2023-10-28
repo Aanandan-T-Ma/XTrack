@@ -28,4 +28,8 @@ export class IncomeComponent implements OnInit {
 		})
 	}
 
+	toggleLoader(val: boolean): void {
+		this.loading = val;
+	}
+
 }

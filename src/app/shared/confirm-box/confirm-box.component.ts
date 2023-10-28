@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
 	selector: 'app-confirm-box',
@@ -8,7 +9,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ConfirmBoxComponent implements OnInit {
 
-	constructor(@Inject(MAT_DIALOG_DATA) public config: any, public dialogRef: MatDialogRef<ConfirmBoxComponent>) { }
+	theme: string;
+
+	constructor(@Inject(MAT_DIALOG_DATA) public config: any, public dialogRef: MatDialogRef<ConfirmBoxComponent>,
+				private themeService: ThemeService) {
+		this.theme = this.themeService.theme;
+		this.themeService.themeChange.subscribe(theme => this.theme = theme);
+	}
 
 	ngOnInit(): void {
 	}
