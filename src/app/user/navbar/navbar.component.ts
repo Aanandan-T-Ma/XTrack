@@ -16,15 +16,16 @@ import { ThemeService } from 'src/app/services/theme.service';
 })
 export class NavbarComponent implements OnInit {
 
-	isHandset: Observable<boolean> = this.breakpointObserver
-										.observe(Breakpoints.Handset)
-										.pipe(map(result => result.matches), shareReplay());
+	isHandset: Observable<boolean>;
 	pageTitle: string;
 	username: string | undefined | null;
 	theme: string;
 
 	constructor(private breakpointObserver: BreakpointObserver, private router: Router, private authService: AuthService,
 				private dialog: MatDialog, private themeService: ThemeService) { 
+		this.isHandset = this.breakpointObserver
+							.observe(Breakpoints.Handset)
+							.pipe(map(result => result.matches), shareReplay());
 		this.router.events.subscribe(() => {
 			let url = this.router.url;
 			this.pageTitle = url.substring(url.lastIndexOf('/') + 1);
