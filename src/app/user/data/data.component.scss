@@ -36,7 +36,9 @@
 }
 
 .add-btn-container {
-    button, .file-upload {
+    display: flex;
+
+    button {
         background-color: hsl(262, 93%, 48%);
         color: white;
         padding: 1px 7px 1px 5px;
@@ -48,25 +50,10 @@
     }
 
     &.Dark {
-        button, .file-upload {
+        button {
             &:hover {
                 box-shadow: 0 0 10px 1px hsl(0, 0%, 55%);
             }
-        }
-    }
-
-    .file-upload {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition-duration: .5s;
-        margin-left: 10px;
-
-        .mat-icon {
-            margin-right: 5px;
         }
     }
 }
@@ -220,9 +207,12 @@
     flex-wrap: wrap;
 
     button {
-        margin-left: 10px;
+        margin: 10px;
         color: white;
-        margin-top: 10px;
+
+        .icon {
+            margin-right: 5px;
+        }
     }
 
     .btn {

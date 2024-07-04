@@ -238,33 +238,38 @@
         <div class="footer-btns {{ theme }}">
             <button mat-flat-button (click)="generatePdf()" [disabled]="noneSelected()"
                 [ngClass]="!noneSelected() ? 'btn' : ''">
-                <mat-icon>print</mat-icon>
-                Print
+                <mat-icon class="icon">print</mat-icon>
+                <span>Print</span>
             </button>
             <button mat-flat-button (click)="sendMail()" [disabled]="noneSelected()"
                 [ngClass]="!noneSelected() ? 'btn' : ''">
-                <mat-icon>email</mat-icon>
-                Send to Mail
+                <mat-icon class="icon">email</mat-icon>
+                <span>Send to Mail</span>
             </button>
             <button mat-flat-button (click)="copyDataToClipboard()" [disabled]="noneSelected() || copied"
                 [ngClass]="!noneSelected() ? 'btn' : ''">
-                <span class="material-icons" [style.color]="copied ? '#3fff00' : 'white'">
+                <span class="material-icons icon" [style.color]="copied ? '#3fff00' : 'white'">
                     {{ copied ? 'check_circle' : 'content_copy'}}
                 </span>
-                {{ copied ? 'Copied!' : 'Copy Data'}}
+                <span>{{ copied ? 'Copied!' : 'Copy Data'}}</span>
             </button>
             <button mat-flat-button (click)="deleteSelected()" [disabled]="noneSelected()"
                 [ngClass]="!noneSelected() ? 'btn red' : ''">
-                <mat-icon>delete</mat-icon>
-                Delete Selected
+                <mat-icon class="icon">delete</mat-icon>
+                <span>Delete Selected</span>
             </button>
         </div>
-        <div class="footer-btns add-btn-container {{ theme }}">
+        <div class="footer-btns {{ theme }}">
             <input type="file" id="excel-upload" #excelUpload (change)="importFromExcel()" hidden>
-            <label for="excel-upload" class="file-upload">
-                <mat-icon>cloud_upload</mat-icon>
-                Import from excel
-            </label>
+            <button mat-flat-button class="btn" (click)="openFileUpload()">
+                <mat-icon class="icon">cloud_upload</mat-icon>
+                <span>Import from excel</span>
+            </button>
+            <button mat-flat-button (click)="exportToExcel()" [disabled]="noneSelected()"
+                [ngClass]="!noneSelected() ? 'btn' : ''">
+                <mat-icon class="icon">print</mat-icon>
+                <span>Export to Excel</span>
+            </button>
         </div>
     </main>
     

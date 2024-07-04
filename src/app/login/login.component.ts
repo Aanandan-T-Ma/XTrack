@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
 				const dialogRef = this.dialog.open(ConfirmBoxComponent, {
 					data: {
 						message: 'Account created successfully!',
-						submessage: 'Activation link sent to registered mail id (Check the spam folder if it\'s not in inbox)',
+						submessage: 'Activation link sent to registered mail id (Please check the spam folder if it\'s not in inbox)',
 						type: 'success',
 						icon: 'done',
 						okBtn: true

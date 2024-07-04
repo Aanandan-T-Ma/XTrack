@@ -7,6 +7,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Clipboard } from '@angular/cdk/clipboard';
 import readXlsxFile from 'read-excel-file';
+import writeXlsxFile from 'write-excel-file';
 
 import { ConfirmBoxComponent } from 'src/app/shared/confirm-box/confirm-box.component';
 import { Data } from 'src/app/shared/models';
@@ -576,7 +577,7 @@ export class DataComponent implements OnInit {
 			this.dialog.open(ConfirmBoxComponent, {
 				data: {
 					message: 'Data sent to the registered mail id',
-					submessage: 'Check the spam folder if it\'s not in inbox',
+					submessage: 'Please check the spam folder if it\'s not in inbox',
 					type: 'success',
 					icon: 'done',
 					okBtn: true
@@ -639,8 +640,10 @@ export class DataComponent implements OnInit {
 			if(confirmed) {
 				readXlsxFile(file).then(fileData => {
 					let added = 0;
-					fileData.forEach(row => {
-						let date = new Date(row[3].toString());
+					fileData.forEach((row, i) => {
+						if(i == 0) return;
+						
+						let date = new Date(Date.parse(row[3].toString().split('-').reverse().join('-')));
 						let data = {
 							name: row[0].toString(),
 							amount: Number(row[1].toString()),
@@ -650,6 +653,7 @@ export class DataComponent implements OnInit {
 							year: date.getFullYear(),
 							type: this.type
 						}
+						
 						this.dataService.addData(data).subscribe(res => {
 							this.allData.push(res);
 							this.allData.sort((a, b) => {
@@ -662,7 +666,7 @@ export class DataComponent implements OnInit {
 								this.categories.push(data.category);
 
 							added++;
-							if(added === fileData.length) {
+							if(added === fileData.length - 1) {
 								this.dialog.open(ConfirmBoxComponent, {
 									data: {
 										message: `${this.title}s added successfully`,
@@ -720,5 +724,46 @@ export class DataComponent implements OnInit {
 				});
 			}
  		});
+	}
+
+	exportToExcel(): void {
+		let selectedData = this.filteredData.filter((data, i) => this.selected[i]);
+		if(selectedData.length === 0) {
+			this.showWarning();
+			return;
+		}
+		
+		const schema = [
+			{
+			  column: this.displayedColumns[2],
+			  type: String,
+			  value: (data: Data) => data.name
+			},
+			{
+			  column: 'Amount',
+			  type: Number,
+			//   format: '#,##0.00',
+			  value: (data: Data) => data.amount
+			},
+			{
+			  column: 'Category',
+			  type: String,
+			  value: (data: Data) => data.category
+			},
+			{
+			  column: 'Date',
+			  type: String,
+			  value: (data: Data) => data.date + '-' + (data.month + 1) + '-' + data.year
+			}
+		];
+		
+		writeXlsxFile(selectedData, {
+			schema,
+			fileName: this.title.toLowerCase() + 's.xlsx'
+		});
+	}
+
+	openFileUpload(): void {
+		this.excelInput.nativeElement.click();
 	}
 }

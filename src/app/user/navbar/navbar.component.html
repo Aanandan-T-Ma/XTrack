@@ -22,7 +22,7 @@
         <mat-nav-list class="nav-list">
             <div class="mode-toggler">
                 <mat-slide-toggle (toggleChange)="toggleTheme()" [checked]="theme === 'Dark'">
-                    {{ theme }} Mode {{ theme === 'Dark' ? '(beta)' : '' }}
+                    {{ theme }} Mode
                 </mat-slide-toggle>
             </div>
             <a mat-list-item [ngClass]="'nav-link ' + (pageTitle == 'dashboard' ? 'active-link ' : ' ') + theme"
