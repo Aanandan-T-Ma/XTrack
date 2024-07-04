@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Data } from 'src/app/shared/models';
 import { Chart, PieController, ArcElement, Tooltip, Title, Legend, CategoryScale, 
-		LinearScale, PointElement, LineElement } from 'chart.js';
+		LinearScale, PointElement, LineElement, 
+		ChartType } from 'chart.js';
 
 Chart.register(PieController, ArcElement, Tooltip, Title, Legend, CategoryScale, 
 		LinearScale, PointElement, LineElement);
@@ -49,7 +50,7 @@ export class AnalyticsComponent implements OnInit {
 			bgColors = ['gray'];
 		}
 		this.categoryChart = new Chart('category-chart', {
-			type: 'pie',
+			type: 'pie' as ChartType,
 			data: {
 				labels: Object.keys(categoryMap),
 				datasets: [

@@ -27,7 +27,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { LoadingComponent } from './loading/loading.component';
-import { ScreenLoaderComponent } from './screen-loader/screen-loader.component';
 
 const modules = [
 	CommonModule,
@@ -60,10 +59,9 @@ const modules = [
 @NgModule({
 	declarations: [
     	LoadingComponent,
-     	ConfirmBoxComponent,
-      	ScreenLoaderComponent
+     	ConfirmBoxComponent
   	],
 	imports: [modules],
-	exports: [modules, LoadingComponent, ScreenLoaderComponent]
+	exports: [modules, LoadingComponent]
 })
 export class SharedModule { }

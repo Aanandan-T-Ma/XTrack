@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Data } from 'src/app/shared/models';
 import { Chart, PieController, ArcElement, Tooltip, Title, Legend, LineController, CategoryScale, 
-		LinearScale, PointElement, LineElement } from 'chart.js';
+		LinearScale, PointElement, LineElement, 
+		ChartType } from 'chart.js';
 import { dayNames, monthNames } from 'src/app/shared/names';
 import { ThemeService } from 'src/app/services/theme.service';
 
@@ -94,7 +95,7 @@ export class DashboardComponent implements OnInit {
 			data = [1];
 		}
 		this.weekChart = new Chart('week-chart', {
-			type: 'pie',
+			type: 'pie' as ChartType,
 			data: {
 				labels: days,
 				datasets: [
