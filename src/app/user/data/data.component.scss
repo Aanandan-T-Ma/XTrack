@@ -158,6 +158,7 @@
                 th {
                     font-size: 0.8rem;
                     padding-right: 20px;
+                    color: rgba(0, 0, 0, 0.5);
                 }
 
                 .data-col {
@@ -182,6 +183,15 @@
 
                 td {
                     padding-right: 20px;
+
+                    .btn-icon {
+                        border-radius: 10%;
+                        transition-duration: .5s;
+                        
+                        &:hover {
+                            background-color: rgb(170, 170, 170);
+                        }
+                    }
                 }
 
                 .no-data-cell {
@@ -189,6 +199,45 @@
                     padding: 10px;
                     color: gray;
                     letter-spacing: 0.2em
+                }
+            }
+        }
+    }
+
+    &.Dark {
+        ::ng-deep table {
+            thead {
+                tr {
+                    background-color: rgba(30, 30, 30);
+
+                    th {
+                        color: rgba(255, 255, 255, 0.5);
+                    }
+
+                    .data-col {
+                        &:hover {
+                            color: white;
+                        }
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    background-color: variables.$container-bg;
+
+                    &:hover {
+                        background-color: rgb(55, 55, 55);
+                    }
+
+                    td {
+                        color: white;
+
+                        .btn-icon {
+                            &:hover {
+                                background-color: rgb(80, 80, 80);
+                            }
+                        }
+                    }
                 }
             }
         }
