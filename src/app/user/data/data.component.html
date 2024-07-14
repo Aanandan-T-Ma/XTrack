@@ -229,7 +229,7 @@
                 </tr>
             </table>
         </div>
-        <mat-paginator #paginator [length]="filteredData.length" [pageSizeOptions]="pageSizes" showFirstLastButtons
+        <mat-paginator #paginator class="table-paginator {{ theme }}" [length]="filteredData.length" [pageSizeOptions]="pageSizes" showFirstLastButtons
                 (page)="changePage($event)" [pageSize]="pageSize" [pageIndex]="pageIndex">
         </mat-paginator>
         <div class="selection-info">

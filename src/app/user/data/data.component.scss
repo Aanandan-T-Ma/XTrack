@@ -211,7 +211,7 @@
                     background-color: rgba(30, 30, 30);
 
                     th {
-                        color: rgba(255, 255, 255, 0.5);
+                        color: rgba(255, 255, 255, 0.6);
                     }
 
                     .data-col {
@@ -239,6 +239,38 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+.table-paginator {
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    &.Dark {
+        background-color: rgba(30, 30, 30);
+        color: white;
+        
+        .label {
+            color: #292929;
+        }
+
+        ::ng-deep {
+            .mat-button-disabled {
+                color: #585858;
+            }
+
+            .mat-select-arrow {
+                color: white;
+            }
+            
+            .mat-select-value {
+                color: white;
+            }
+            
+            .mat-form-field-underline {
+                background-color: white;
+                height: 1px;
             }
         }
     }
