@@ -158,6 +158,7 @@
                 th {
                     font-size: 0.8rem;
                     padding-right: 20px;
+                    color: rgba(0, 0, 0, 0.5);
                 }
 
                 .data-col {
@@ -182,6 +183,15 @@
 
                 td {
                     padding-right: 20px;
+
+                    .btn-icon {
+                        border-radius: 10%;
+                        transition-duration: .5s;
+                        
+                        &:hover {
+                            background-color: rgb(170, 170, 170);
+                        }
+                    }
                 }
 
                 .no-data-cell {
@@ -190,6 +200,77 @@
                     color: gray;
                     letter-spacing: 0.2em
                 }
+            }
+        }
+    }
+
+    &.Dark {
+        ::ng-deep table {
+            thead {
+                tr {
+                    background-color: rgba(30, 30, 30);
+
+                    th {
+                        color: rgba(255, 255, 255, 0.6);
+                    }
+
+                    .data-col {
+                        &:hover {
+                            color: white;
+                        }
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    background-color: variables.$container-bg;
+
+                    &:hover {
+                        background-color: rgb(55, 55, 55);
+                    }
+
+                    td {
+                        color: white;
+
+                        .btn-icon {
+                            &:hover {
+                                background-color: rgb(80, 80, 80);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.table-paginator {
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    &.Dark {
+        background-color: rgba(30, 30, 30);
+        color: white;
+        
+        .label {
+            color: #292929;
+        }
+
+        ::ng-deep {
+            .mat-button-disabled {
+                color: #585858;
+            }
+
+            .mat-select-arrow {
+                color: white;
+            }
+            
+            .mat-select-value {
+                color: white;
+            }
+            
+            .mat-form-field-underline {
+                background-color: white;
+                height: 1px;
             }
         }
     }
