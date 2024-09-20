@@ -19,11 +19,12 @@ export class DataModalComponent implements OnInit {
 
 	ngOnInit(): void {
 		console.log(this.data);
+		let isAddModal = (this.data.type == 'Add');
 		this.dataForm = new FormGroup({
-			name: new FormControl(this.data.newData ? '' : this.data.data.name, Validators.required),
-			amount: new FormControl(this.data.newData ? '' : this.data.data.amount, Validators.required),
-			category: new FormControl(this.data.newData ? '' : this.data.data.category, Validators.required),
-			date: new FormControl(this.data.newData ? '' : new Date(this.data.data.year, this.data.data.month, this.data.data.date), 
+			name: new FormControl(isAddModal ? '' : this.data.data.name, Validators.required),
+			amount: new FormControl(isAddModal ? '' : this.data.data.amount, Validators.required),
+			category: new FormControl(isAddModal ? '' : this.data.data.category, Validators.required),
+			date: new FormControl(isAddModal ? '' : new Date(this.data.data.year, this.data.data.month, this.data.data.date), 
 									Validators.required)
 		});
 		this.filteredOptions = this.dataForm['controls']['category'].valueChanges.pipe(
