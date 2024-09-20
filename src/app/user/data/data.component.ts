@@ -302,11 +302,13 @@ export class DataComponent implements OnInit {
 		this.generateDataSource();
 	}
 
-	openAddModal(): void {
+	openAddModal(index: number = -1): void {
+		let isAddModal = (index == -1);
 		const dialogRef = this.dialog.open(DataModalComponent, {
 			data: {
-				newData: true,
+				type: isAddModal ? 'Add' : 'Copy',
 				title: this.title,
+				data: isAddModal ? null : this.displayedData[index],
 				categories: this.categories
 			}
 		});
@@ -339,7 +341,7 @@ export class DataComponent implements OnInit {
 	openEditModal(index: number): void {
 		const dialogRef = this.dialog.open(DataModalComponent, {
 			data: {
-				newData: false,
+				type: 'Edit',
 				title: this.title,
 				data: this.displayedData[index],
 				categories: this.categories
