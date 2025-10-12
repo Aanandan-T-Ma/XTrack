@@ -82,7 +82,7 @@ export class DataComponent implements OnInit {
 			month: new FormControl(''),
 			year: new FormControl('', Validators.pattern('[0-9]{4}')),
 			day: new FormControl(''),
-			category: new FormControl('Any'),
+			category: new FormControl([]),
 			name: new FormControl(''),
 			minAmount: new FormControl('', Validators.min(0)),
 			maxAmount: new FormControl('', Validators.min(0)),
@@ -217,7 +217,7 @@ export class DataComponent implements OnInit {
 				return false;
 			if(this.filterForm.value.day !== '' && data.day != this.filterForm.value.day)
 				return false;
-			if(this.filterForm.value.category != 'Any' && data.category.toLowerCase() != this.filterForm.value.category.toLowerCase()) 
+			if(this.filterForm.value.category.length != 0 && this.filterForm.value.category.every(c => c.toLowerCase() != data.category.toLowerCase()))
 				return false;
 			if(this.filterForm.value.name !== '' && !data.name.toLowerCase().includes(this.filterForm.value.name.toLowerCase())) 
 				return false;
@@ -240,7 +240,7 @@ export class DataComponent implements OnInit {
 			month: '',
 			year: '',
 			day: '',
-			category: 'Any',
+			category: [],
 			name: '',
 			minAmount: '',
 			maxAmount: '',

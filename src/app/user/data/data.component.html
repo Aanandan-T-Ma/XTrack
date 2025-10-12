@@ -80,7 +80,7 @@
     
                 <mat-form-field class="form-field {{ theme }}">
                     <mat-label class="label">Category</mat-label>
-                    <mat-select formControlName="category" [panelClass]="theme">
+                    <mat-select formControlName="category" multiple [panelClass]="theme">
                         <mat-option *ngFor="let c of categories" [value]="c">
                             {{ c }}
                         </mat-option>
